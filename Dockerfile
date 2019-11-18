@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-MAINTAINER Wijanarko Putra Rajeb "wijanarko.rajeb@gmail.com"
+MAINTAINER Dian wibowo
 
 RUN apt-get update -y
 
