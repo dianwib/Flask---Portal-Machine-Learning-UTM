@@ -15,7 +15,7 @@
     <!-- meta character set -->
     <meta charset="UTF-8">
     <!-- Site Title -->
-    <title>Konversi Greyscale</title>
+    <title>Linear Regression</title>
 
     <!--
 			Google Font
@@ -51,24 +51,28 @@
                 <nav id="nav-menu-container">
                     <ul class="nav-menu">
                         <li><a href="../">Home</a></li>
-                        <li><a href="about.html">About</a></li>
+                        <li><a href="about">About</a></li>
                         <li class="menu-has-children"><a href="">Lecture Notes</a>
                             <ul>
-                                <li><a href="#">Regressi Linear</a></li>
+                                <li><a href="task_linear_regression">Linear Regression</a></li>
+                                <li><a href="#">Logistic Regression</a></li>
                                 <li><a href="#">CART</a></li>
                                 <li><a href="#">K-means Clustering</a></li>
-                                <li><a href="#">Backprop</a></li>
+                                <li><a href="#">Neuron</a></li>
+                                <li><a href="#">Multi Layer Perceptron</a></li>
+                                <li><a href="#">Convolutional Neural Networks</a></li>
                             </ul>
                         </li>
-                        <li class="menu-has-children menu-active"><a href="">Tugas</a>
+                        <li class="menu-has-children"><a href="">Tugas</a>
                             <ul>
-                                <li><a href="#">Regressi Linear</a></li>
+                                <li><a href="#">Linear Regression</a></li>
+                                <li><a href="#">Logistic Regression</a></li>
                                 <li><a href="#">CART</a></li>
                                 <li><a href="#">K-means Clustering</a></li>
-                                <li><a href="#">Backprop</a></li>
+                                <li><a href="#">Artificial Neural Networks</a></li>
                             </ul>
                         </li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="contact">Contact</a></li>
                     </ul>
                 </nav>
                 <!-- #nav-menu-container -->
@@ -77,13 +81,12 @@
     </header>
     <!-- End Header Area -->
 
-
     <section class="banner-area relative">
         <div class="container">
             <div class="row d-flex align-items-center justify-content-center">
                 <div class="about-content col-lg-12">
                     <h1 class="text-white">
-                        Konversi Warna Citra Greyscale
+                        Linear Regression
                     </h1>
                     <!-- <p>In the history of modern astronomy, there is probably no one greater leap forward than the building and launch of
 						the space telescope.</p> -->
@@ -92,9 +95,6 @@
                         <a href="#dataset" data-wow-duration="1s" data-wow-delay=".6s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">Dataset</a>
                         <a href="#training" data-wow-duration="1s" data-wow-delay=".9s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">Training</a>
                         <a href="#testing" data-wow-duration="1s" data-wow-delay=".3s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">Testing</a>
-
-
-
                     </div>
                 </div>
             </div>
@@ -106,15 +106,132 @@
     <!-- End Feature Area -->
 
 
-    <!-- Start Faculty Area -->
+    <!-- Start dataset Area -->
+    <section class="faculty-area section-gap" id="dataset">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="section-title text-center">
+                        <h1>Dataset</h1>
+                        <!-- <h4> Brief Description</h4> -->
+                        <p> From Bradley Efron, Trevor Hastie, Iain Johnstone and Robert Tibshirani (2004) "Least Angle Regression," <i>Annals of Statistics</i> (with discussion), 407-499, we have "Ten baseline variables, age, sex, body mass index, average
+                            blood pressure, and six blood serum measurements were obtained for each of n = 442 diabetes patients, as well as the response of interest, a quantitative measure of disease progression one year after baseline." In the tab delimited
+                            file above, the variables are named AGE SEX BMI BP S1 S2 S3 S4 S5 S6 Y
+                        </p>
+                        <p>Jumlah data pada dataset diabetes adalah 442. Jumlah fitur yang dimiliki Diabetes Dataset adalah 10 fitur yang terdiri dari usia, jenis kelamin, indeks massa tubuh, tekanan darah rata-rata dan enam pengukuran serum darah yaitu
+                            serum 1, serum 2, serum 3, serum 4, serum 5 dan serum 6. Target dari Diabetes Dataset adalah ukuran kuantitatif perkembangan penyakit diabetes dalam satu tahun dengan keadaan sesuai atibut/fitur. Tujuan dari Diabetes Dataset
+                            adalah melihat pengaruh atribut-atribut pendukung penyakit diabetes terhadap hasil target. Pada Diabetes Dataset terdapat 442 responden yang menujukan jumlah data yang dapat digunakan.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End dataset Area -->
+
+    <!-- Start training Area -->
+    <section class="faculty-area section-gap" id="training">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="section-title text-center">
+                        <h1>Training</h1>
+                        <form id='upload-form' method='POST' enctype="multipart/form-data" class="">
+                            <div class='form-group'>
+                                <label for='split_data_test'>Persentase Data Test (dalam persen)</label>
+                                <input type='text' class='form-control' id='split_data_test' name='query_split_data_test' placeholder="Presentasi Data Test (dalam persen)" required>
+                            </div>
+                            <div class='form-group'>
+                                <label for='epochs'>Banyak Epoch</label>
+                                <input type='text' class='form-control' id='epochs' name='query_epochs' placeholder="Epochs" required>
+                            </div>
+                            <label>Tampilkan Proses Training</label>
+                            <div class='form-group'>
+
+                                <div class='form-check-inline'>
+                                    <label class='form-check-label'>
+                                    <input type='radio' class='form-check-input' id='tampil_training' name='query_tampil_training' value='Ya'>Ya
+                                </label>
+                                </div>
+                                <div class='form-check-inline'>
+                                    <label class='form-check-label'>
+                                        <input type='radio' class='form-check-input' id='tampil_training' name='query_tampil_training' value='Tidak' checked>Tidak
+                                    </label>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Train</button>
+                        </form>
+                    </div>
+                    <!-- tampilan model -->
+                    {% if model is defined %}
+                    <div class='section-title'>
+                        <h3 class='text-center'>Model</h3>
+                        <div class=''>{{ model }}</div>
+                        <br>
+                        <h3 class='text-center'>Plotting</h3>
+                        <img alt='Plot Linear Regression' src="{{url_for('static', filename='assets/img/PlotLinReg.png')}}" style="display:block;margin-left:auto;margin-right:auto;">
+                    </div>
+                    {% endif %}
+                </div>
+                {% if step_trains is defined %}
+                <div class='col justify-content-center'>
+                    <h3 class='text-center'>Proses Training</h3>
+                    <table class='table table-striped'>
+                        <tr>
+                            <th>Epoch Ke-</th>
+                            {% for index_dim in range(11) %}
+                            <th>w{{ loop.index - 1 }}</th>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            {% for index_epoch in range(1, epochs + 1) %}
+                            <td> {{ index_epoch }} </td>
+                            {% for index_dim in range(11) %}
+                            <td> {{ step_trains[index_epoch-1][index_dim] }} </td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    <!-- End training Area -->
+
+
+    <!-- Start testing Area -->
     <section class="faculty-area section-gap" id="testing">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="section-title text-center">
                         <h1>Testing</h1>
+                        <form id='form-upload_data_test' method='POST' enctype='multipart/form-data' class='form'>
+                            <label for='age'>AGE</label>
+                            <input id='age' name='age_input' class='form form-control' placeholder='AGE (Rekomendasi input -0.1 hingga 0.2)'>
+                            <label for='sex'>SEX</label>
+                            <input id='sex' name='sex_input' class='form form-control' placeholder='SEX  (Rekomendasi input -0.04 hingga 0.2)'>
+                            <label for='bmi'>BMI</label>
+                            <input id='bmi' name='bmi_input' class='form form-control' placeholder='BMI  (Rekomendasi input -0.09 hingga 0.2)'>
+                            <label for='bp'>BP</label>
+                            <input id='bp' name='bp_input' class='form form-control' placeholder='BP  (Rekomendasi input -0.1 hingga 0.2)'>
+                            <label for='s1'>S1</label>
+                            <input id='s1' name='s1_input' class='form form-control' placeholder='S1  (Rekomendasi input -0.1 hingga 0.2)'>
+                            <label for='s2'>S2</label>
+                            <input id='s2' name='s2_input' class='form form-control' placeholder='S2  (Rekomendasi input -0.1 hingga 0.2)'>
+                            <label for='s3'>S3</label>
+                            <input id='s3' name='s3_input' class='form form-control' placeholder='S3  (Rekomendasi input -0.1 hingga 0.2)'>
+                            <label for='s4'>S4</label>
+                            <input id='s4' name='s4_input' class='form form-control' placeholder='S4  (Rekomendasi input -0.1 hingga 0.2)'>
+                            <label for='s5'>S5</label>
+                            <input id='s5' name='s5_input' class='form form-control' placeholder='S5  (Rekomendasi input -0.1 hingga 0.2)'>
+                            <label for='s6'>S6</label>
+                            <input id='s6' name='s6_input' class='form form-control' placeholder='S6  (Rekomendasi input -0.1 hingga 0.2)'>
+                            <button type="submit" class="btn btn-primary">Test</button>
+                        </form>
 
-                        <form id="upload-form" method="POST" enctype="multipart/form-data" class="">
+                        <!-- <form id="upload-form" method="POST" enctype="multipart/form-data" class="">
 
                             <label>Pilih Citra</label>
                             <div class="input-group" style="display: block;
@@ -150,10 +267,10 @@
                             </a>
                         </div>
                         {% endif %}
+                    </div> -->
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </section>
     <!-- End Faculty Area -->
@@ -209,4 +326,4 @@
     <script src="{{url_for('static', filename='assets/js/main.js')}}"></script>
 </body>
 
-</html>
+</html>`
