@@ -32,6 +32,7 @@ class Kmeans:
             dataLabel[i] = minEDist
         return dataLabel
 
+
     def training(self, data, center, itteration):
         #print('center :\n',center)
         tempCenter = center;
@@ -139,6 +140,32 @@ class Kmeans:
         for i in range(len(center)):
             result[data == i] = center[i]
         return result
+
+    def predictEDist(self, data, tempCenter):
+        dataLabel = np.zeros([len(data)], dtype=int)
+        dataEDist = np.zeros([len(data)])
+        for i in range(len(data)):
+            eDist = np.zeros(len(tempCenter))
+            #print(data[i])
+            #--
+            #-- menghitung jarak data ke-i ke tiap center
+            #--
+            for j in range(len(eDist)):
+                eDist[j] = 0
+                for k in range(len(data[i])):
+                    eDist[j] = eDist[j] + ( data[i,k] - tempCenter[j,k] ) ** 2
+                eDist[j] = np.sqrt(eDist[j])
+
+            #--
+            #-- mencari jarak terpendek
+            #--   
+            minEDist = 0
+            for l in range(len(eDist)):
+                if(eDist[minEDist] > eDist[l]):
+                    minEDist = l
+            dataLabel[i] = minEDist
+            dataEDist[i] = eDist[minEDist]
+        return dataLabel, dataEDist
     
 def load_images_from_folder(folder):
     images = []
@@ -152,7 +179,7 @@ def load_images_from_folder(folder):
     return images
 
 if __name__ == "__main__":
-    folderName = "images\msra-b-0"
+    folderName = "static/assets/images/msra-b-0/dataset"
     images = load_images_from_folder(folderName)
 
     data = images[0]

@@ -18,6 +18,11 @@ def hello_world():
 def hello_notes():
 	return render_template('lecture_notes.html')
 
+@app.route('/contact')
+def hello_contact():
+	return render_template('contact.html')
+
+
 # @app.after_request
 # def add_header(response):
 #     '''
@@ -181,27 +186,59 @@ def kmeans():
         epoch = int(request.form['epoch'])
         jumlahCluster = int(request.form['jumlahCluster'])
         centeroid = request.form['centeroid']
+        if centeroid != "":
+            centeroid = centeroid.split('-')
+            if(jumlahCluster != len(centeroid)):
+                return render_template('kmeans.html')
 
+            for i in range(len(centeroid)):
+                centeroid[i] = centeroid[i].split(',')
+                for j in range(len(centeroid[i])):
+                    centeroid[i][j] = int(centeroid[i][j])
+
+            centeroid = np.array(centeroid)
+            print('centeroid :\n', centeroid)
+        else:
+            centeroid = kmeans.findRandomCenter(img_input, 3)
+        
         kmeans = Kmeans()
 
         result_paths = []
-        centeroid = kmeans.findRandomCenter(img_input, 3)
+        predicts = []
+        eDists = []
+        centeroids = []
         for i in range(epoch):
             centeroid = kmeans.training(img_input, centeroid, 1)
+            centeroids.append(centeroid)
             print('centeroid :\n', centeroid)
-            predict = kmeans.predict(img_input, centeroid)
-            predict = kmeans.predict2img(predict, centeroid)
-            predict = predict.reshape(imgDim)
-            predict = np.array(predict, dtype=np.uint8)
+            predict, eDist = kmeans.predictEDist(img_input, centeroid)
             
-            cv2.imwrite(path_hasil + result_name + str(i+1) + '.jpg', predict)
+
+            predict2img = kmeans.predict2img(predict, centeroid)
+            predict2img = predict2img.reshape(imgDim)
+            predict2img = np.array(predict2img, dtype=np.uint8)
+            
+            cv2.imwrite(path_hasil + result_name + str(i+1) + '.jpg', predict2img)
             result_paths.append(result_name + str(i+1) + '.jpg')
 
-        print(result_paths) 
-        return render_template('kmeans.html', query_img=file.filename, query_imgs=result_paths)
+            predict, eDist = predict.reshape(imgDim[0]  , imgDim[1]), eDist.reshape(imgDim[0], imgDim[1])
+            predict, eDist = np.array(predict, dtype=np.uint8), np.array(eDist, dtype=float)
+            predict, eDist = cv2.resize(predict, (16, 16)), cv2.resize(eDist, (16, 16))
+            predicts.append(predict)
+            eDists.append(eDist)
+            print(predict)
+
+        print(result_paths)
+
+        tampilProses = request.form.get('process')
+        print(tampilProses)
+        if tampilProses == 'yes':
+            return render_template('kmeans.html', process='yes', query_img=file.filename, query_imgs=result_paths, centeroids=centeroids, predicts=predicts, eDists=eDists)
+        else:
+            return render_template('kmeans.html', process='no', query_img=file.filename, query_imgs=result_paths[-1], centeroids=centeroids[-1], predicts=predicts[-1], eDists=eDists[-1])
+        
     else:
         return render_template('kmeans.html')
-    return render_template('kmeans.html')
 # ----------------------------------------------------------
 
 
