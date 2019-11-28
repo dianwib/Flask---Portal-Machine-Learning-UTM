@@ -182,7 +182,8 @@ def kmeans():
         #img_input = cv2.resize(img_input, (128, 128))
         imgDim = img_input.shape
         img_input = img_input.reshape(imgDim[0]*imgDim[1],imgDim[2])
-        
+        kmeans = Kmeans()
+
         epoch = int(request.form['epoch'])
         jumlahCluster = int(request.form['jumlahCluster'])
         centeroid = request.form['centeroid']
@@ -199,10 +200,10 @@ def kmeans():
             centeroid = np.array(centeroid)
             print('centeroid :\n', centeroid)
         else:
+			
             centeroid = kmeans.findRandomCenter(img_input, 3)
         
-        kmeans = Kmeans()
-
+        
         result_paths = []
         predicts = []
         eDists = []
