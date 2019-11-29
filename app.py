@@ -33,6 +33,7 @@ def hello_contact():
 #     response.headers['Cache-Control'] = 'public, max-age=0'
 #     return response
 
+
 @app.route('/greyscale_citra',methods=['GET', 'POST'])
 def convert_image():
     path_hasil = 'static/assets/greyscale_citra/hasil/'
@@ -49,6 +50,8 @@ def convert_image():
     else:
         return render_template('greyscale_citra.html')
 
+
+###########WAHYU
 def plotting_model(weight, X, Y):
     plt.title('Prediksi Nilai Diabetes')
     plt.xlabel('Indeks Massa Tubuh')
@@ -68,31 +71,55 @@ def plotting_model(weight, X, Y):
 def task_linear_regression_route():
     if request.method == 'POST':
         # Menyimpan nilai inputan dari web
-        epochs = int(request.form['query_epochs'])
-        test_size = int(request.form['query_split_data_test']) / 100
-        option_show_training = request.form['query_tampil_training']
-
+        weight = 0
+        mode = request.form['mode']
         # Training
-        if epochs != None or test_size != None or option_show_training != None:
+        if mode == 'Training':
+            epochs = int(request.form['query_epochs'])
+            print(request.form.get('komposisi', None))
+            test_size = (100 - int(request.form.get('komposisi'))) / 100
+            option_show_training = request.form['query_tampil_training']
             data, target = load_diabetes(return_X_y=True)
             data_training, data_test, target_training, target_test = train_test_split(data, target, 
                 test_size=test_size, random_state=0)
             stochasticGD = linearregressionmanual.ManualLinearRegression()
             weight = stochasticGD.training(data_training, target_training, epochs, 0.05)
+            np.save('static/assets/model/model_linreg.npy', weight)
             weight = np.around(weight, decimals=2)
             num_of_weight, dim = weight.shape
             model = 'y = ' + str(round(weight[num_of_weight - 1][0], 2))
             for index_weight in range(1, dim):
                 w = round(weight[num_of_weight - 1][index_weight], 2)
                 model = model + (' + ' + str(w) + (' * x%s'%(index_weight)))
-            plotting_model(weight, data_training[:, 2], target_training)
+            # plotting_model(weight, data_training[:, 2], target_training)
             if option_show_training == 'Tidak':
                 return render_template('task_linear_regression.html', model=model)
             elif option_show_training == 'Ya':
                 return render_template('task_linear_regression.html', model=model, step_trains=weight, epochs=epochs)
+        else:
+            age = float(request.form['age_input'])
+            sex = float(request.form['sex_input'])
+            bmi = float(request.form['bmi_input'])
+            bp = float(request.form['bp_input'])
+            s1 = float(request.form['s1_input'])
+            s2 = float(request.form['s2_input'])
+            s3 = float(request.form['s3_input'])
+            s4 = float(request.form['s4_input'])
+            s5 = float(request.form['s5_input'])
+            s6 = float(request.form['s6_input'])
+            data_test = np.array([[age, sex, bmi, bp, s1, s2, s3, s4, s5, s6]])
+            weight = np.load('static/assets/model/model_linreg.npy')
+            stochasticGD = linearregressionmanual.ManualLinearRegression()
+            predict = stochasticGD.testing(data_test, weight)
+            predict = np.around(predict, decimals=2)
+            return render_template('task_linear_regression.html', predict=predict[0])
 
     else:
         return render_template('task_linear_regression.html')
+
+@app.route('/task_logistic_linear', methods=['GET', 'POST'])
+def task_logistic_regression_route():
+    pass
 
 
 #----------BRIAN
@@ -162,7 +189,6 @@ def cart():
     else:
         return render_template('cart.html', mode='training')
 # ----------------------------------------------------------
-
 # kmeans ---------------------------------------------------
 from kmeans import Kmeans
 from sklearn import datasets
@@ -182,8 +208,7 @@ def kmeans():
         #img_input = cv2.resize(img_input, (128, 128))
         imgDim = img_input.shape
         img_input = img_input.reshape(imgDim[0]*imgDim[1],imgDim[2])
-        kmeans = Kmeans()
-
+        
         epoch = int(request.form['epoch'])
         jumlahCluster = int(request.form['jumlahCluster'])
         centeroid = request.form['centeroid']
@@ -200,10 +225,10 @@ def kmeans():
             centeroid = np.array(centeroid)
             print('centeroid :\n', centeroid)
         else:
-			
             centeroid = kmeans.findRandomCenter(img_input, 3)
         
-        
+        kmeans = Kmeans()
+
         result_paths = []
         predicts = []
         eDists = []
@@ -241,7 +266,6 @@ def kmeans():
     else:
         return render_template('kmeans.html')
 # ----------------------------------------------------------
-
 
 
 if __name__ == "__main__":

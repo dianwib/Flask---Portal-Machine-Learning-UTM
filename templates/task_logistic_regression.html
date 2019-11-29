@@ -51,19 +51,19 @@
                 <nav id="nav-menu-container">
                     <ul class="nav-menu">
                         <li><a href="../">Home</a></li>
-                        <li><a href="notes">Lecture Notes</a></li>
+                       <li><a href="notes">Lecture Notes</a></li>
                         
-                        <li class="menu-has-children menu-active"><a href="">Tugas</a>
-                            <ul>
+						<li class="menu-has-children menu-active"><a href="">Tugas</a>
+							<ul>
                                 <li><a href="task_linear_regression">Linear Regression</a></li>
                                 <li><a href="task_logistic_linear">Logistic Regression</a></li>
                                 <li><a href="cart">CART</a></li>
                                 <li><a href="kmeans">K-means Clustering - Segmentasi Citra</a></li>
                                 <li><a href="#">Artificial Neural Networks</a></li>
                             </ul>
-                        </li>
-                        <li><a href="contact">Contact</a></li>
-                    </ul>
+						</li>
+						<li><a href="contact">Contact</a></li>
+					</ul>
                 </nav>
                 <!-- #nav-menu-container -->
             </div>
@@ -76,7 +76,7 @@
             <div class="row d-flex align-items-center justify-content-center">
                 <div class="about-content col-lg-12">
                     <h1 class="text-white">
-                        Linear Regression
+                        Logistic Regression
                     </h1>
                     <!-- <p>In the history of modern astronomy, there is probably no one greater leap forward than the building and launch of
 						the space telescope.</p> -->
@@ -127,27 +127,10 @@
                     <div class="section-title text-center">
                         <h1>Training</h1>
                         <form id='upload-form' method='POST' enctype="multipart/form-data" class="">
-                            <!-- <div class='form-group'>
+                            <div class='form-group'>
                                 <label for='split_data_test'>Persentase Data Test (dalam persen)</label>
                                 <input type='text' class='form-control' id='split_data_test' name='query_split_data_test' placeholder="Presentasi Data Test (dalam persen)" required>
-                            </div> -->
-                            <div class="form-group">
-                                <label for="komposisi" id='komposisiLabel'>Komposisi</label>
-                                <input type="range" class="custom-range" min="5" max="95" step="1" value='80' id="komposisi" name='komposisi'>
                             </div>
-                            <script>
-                                var komposisi = document.getElementById('komposisi');
-                                var komposisiLabel = document.getElementById('komposisiLabel')
-                                komposisiLabel.innerHTML = 'Komposisi : ' + komposisi.value + '% training, ' + (100 - komposisi.value) + '% testing'
-                                komposisi.onchange = function() {
-                                    var testing = 100 - this.value
-                                    komposisiLabel.innerHTML = 'Komposisi : ' + this.value + '% training, ' + testing + '% testing';
-                                }
-                                komposisi.oninput = function() {
-                                    var testing = 100 - this.value
-                                    komposisiLabel.innerHTML = 'Komposisi : ' + this.value + '% training, ' + testing + '% testing';
-                                }
-                            </script>
                             <div class='form-group'>
                                 <label for='epochs'>Banyak Epoch</label>
                                 <input type='text' class='form-control' id='epochs' name='query_epochs' placeholder="Epochs" required>

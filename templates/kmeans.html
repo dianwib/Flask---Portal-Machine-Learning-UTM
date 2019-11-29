@@ -2,6 +2,14 @@
 <html lang="zxx" class="no-js">
 
 <head>
+
+	<style>
+		table{
+			table-layout: fixed;
+			width: 300px;
+		}
+	</style>
+
 	<!-- Mobile Specific Meta -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- Favicon-->
@@ -52,17 +60,17 @@
 					<ul class="nav-menu">
 						<li><a href="../">Home</a></li>
 						<li><a href="notes">Lecture Notes</a></li>
-                        
-						<li class="menu-has-children menu-active"><a href="">Tugas</a>
-							<ul>
+                               
+                        <li class="menu-has-children menu-active"><a href="">Tugas</a>
+                            <ul>
                                 <li><a href="task_linear_regression">Linear Regression</a></li>
-                                <li><a href="#">Logistic Regression</a></li>
+                                <li><a href="task_logistic_linear">Logistic Regression</a></li>
                                 <li><a href="cart">CART</a></li>
                                 <li><a href="kmeans">K-means Clustering - Segmentasi Citra</a></li>
                                 <li><a href="#">Artificial Neural Networks</a></li>
                             </ul>
-						</li>
-						<li><a href="contact">Contact</a></li>
+                        </li>
+						<li><a href="contact.html">Contact</a></li>
 					</ul>
 				</nav><!-- #nav-menu-container -->
 			</div>
@@ -100,7 +108,7 @@
 
 
 	<!-- Start Faculty Area -->
-	<section class="faculty-area section-gap" id="dataset">
+	<section class="faculty-area section-gap" id="testing">
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-lg-8">
@@ -159,10 +167,11 @@
 								</div>
 								<div class="form-group col">
 									<label for="inputPassword4">Centeroid (jika kosong, dipilih random)</label>
-									<input type="text" class="form-control" id="centeroid" placeholder="0,0,0,0-175,175,175-255,255,255" name="centeroid">
+									<input type="text" class="form-control" id="centeroid" placeholder="0,0,0-175,175,175-255,255,255" name="centeroid" value="0,0,0-175,175,175-255,255,255">
 								</div>
 							</div>
 							<button type="submit" class="btn btn-primary">Cluster</button>
+							<input type="checkbox" name="process" value="yes"> tampilkan process training 
 						</form>
 						<script>
 							document.getElementById('query_img').addEventListener('change', function(){
@@ -179,12 +188,46 @@
 					</div>
 					{% endif %}
 
-					{% if query_imgs %}
+					{% if query_imgs and process == 'no' %}
+					<div class="section-title">
+						<h1 class='text-center'>Hasil</h1>
+						<img class="" src="{{url_for('static', filename='assets/kmeans/hasil/')}}{{ query_imgs }}"><br>
+						{{query_imgs}}
+					</div>
+					{% endif %}
+
+					{% if query_imgs and process == 'yes' %}
 					<div class="section-title">
 						<h1 class='text-center'>Hasil</h1>
 						{% for img in query_imgs %}
-						<img class="" src="{{url_for('static', filename='assets/kmeans/hasil/')}}{{ img }}">
-						{{img}}<br>
+						{% set epoch = loop.index %}
+						<h4>Epoch - {{epoch}}</h4>
+						<div class="row bg-dark text-light mt-1">
+							<h5 class="text-light">Centeroid : </h5>
+							{% for center in centeroids[epoch-1] %}
+								{{center}}<br>
+							{% endfor %}
+							<br>
+							<div class="col">
+								<img class="" src="{{url_for('static', filename='assets/kmeans/hasil/')}}{{ img }}"><br>
+								{{img}}
+							</div>
+							<div class="col" style="font-size: 0.5em;">
+								<table border="1" width='100%'>
+									<!-- {{centeroids[epoch-1][1][0]}} -->
+									{% for labels in predicts[epoch-1] %}
+									{% set i = loop.index %}
+									<tr>
+										{% for label in labels %}
+										{% set j = loop.index %}
+										<td class='{{centeroids[epoch-1]}}' style="text-align: center; overflow: hidden;">{{ eDists[epoch-1][i-1][j-1] }}</td>
+										<!-- <td class='{{centeroids[epoch-1]}}' style="text-align: center; overflow: hidden;">{{ label }}</td> -->
+										{% endfor %}
+									</tr>
+									{% endfor %}
+								</table>
+							</div>
+						</div>
 						{% endfor %}
 					</div>
 					{% endif %}
