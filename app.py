@@ -117,9 +117,68 @@ def task_linear_regression_route():
     else:
         return render_template('task_linear_regression.html')
 
+
+import numpy as np
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import normalize
 @app.route('/task_logistic_linear', methods=['GET', 'POST'])
 def task_logistic_regression_route():
-    pass
+    if request.method == 'POST':
+        mode = request.form['mode']
+        if mode == "Training":
+            test_size = (100 - int(request.form['komposisi'])) / 100
+            learning_rate = float(request.form['learning_rate'])
+            epochs = int(request.form['query_epochs'])
+            option_show_training = request.form['query_tampil_training']
+            data, target = load_breast_cancer(return_X_y=True)
+            data_training, data_test, target_training, target_test = train_test_split(data, target, 
+                test_size=test_size, random_state=0)
+            
+            data_training = normalize(data_training)
+            data_test = normalize(data_test)
+
+            # Deklarasi objects
+            logisticRegression = logisticregressionmanual.ManualLogisticRegression()
+            weight = logisticRegression.training(data_training, target_training, epochs, learning_rate)
+            np.save('static/assets/model/model_logreg.npy', weight)
+            weight = np.around(weight, decimals=2)
+            num_of_weight, dim = weight.shape
+            model = 'y = ' + str(round(weight[num_of_weight - 1][0], 2))
+            for index_weight in range(1, dim):
+                w = round(weight[num_of_weight - 1][index_weight], 2)
+                model = model + (' + ' + str(w) + (' * x%s'%(index_weight)))
+            predict = logisticRegression.testing(data_test, weight[len(weight)-1])
+            precision, recall = logisticRegression.accurate(target_test, predict)
+            if option_show_training == 'Tidak':
+                return render_template('task_logistic_regression.html', model=model, precision=precision, recall=recall)
+            elif option_show_training == 'Ya':
+                return render_template('task_logistic_regression.html', model=model, precision=precision, recall=recall, step_trains=weight, epochs=epochs)
+        else:
+            weight = np.load('static/assets/model/model_logreg.npy')
+            test_from_input = request.form['input_test']
+            print(test_from_input.split(','))
+            default_test = np.array([[18.0, 10.3, 60.0, 1500.0, 0.08, 0.1, 0.1, 0.1, 0.1, 0.08, 1.0, 2.0, 10.0, 250.0, 
+                0.02, 0.05, 0.1, 0.002, 0.04, 0.0015, 18.0, 25.0, 125.0, 2500.0, 0.1, 0.5, 0.712, 0.1, 0.3, 0.1]])
+            temp_test = test_from_input.split(',')
+            if len(temp_test) == 30:
+                test = [[]]
+                for i in range(30):
+                    test[0].append(float(temp_test[i]))
+                test = np.array(test)
+            else:
+                test = default_test
+            # print(test.shape)
+            logisticRegression = logisticregressionmanual.ManualLogisticRegression()
+            predict = logisticRegression.testing(test, weight[len(weight)-1])
+            # print(predict)
+            if int(predict) == 0:
+                kelas = 'Malignant'
+            else:
+                kelas = 'Benigh'
+            return render_template('task_logistic_regression.html', kelas=kelas)
+    else:
+        return render_template('task_logistic_regression.html')
 
 
 #----------BRIAN

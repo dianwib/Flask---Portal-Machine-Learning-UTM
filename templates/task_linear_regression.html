@@ -50,9 +50,9 @@
                 </div>
                 <nav id="nav-menu-container">
                     <ul class="nav-menu">
-                        <li><a href="../">Home</a></li>
+                       <li><a href="../">Home</a></li>
                         <li><a href="notes">Lecture Notes</a></li>
-                        
+                               
                         <li class="menu-has-children menu-active"><a href="">Tugas</a>
                             <ul>
                                 <li><a href="task_linear_regression">Linear Regression</a></li>
@@ -62,7 +62,7 @@
                                 <li><a href="#">Artificial Neural Networks</a></li>
                             </ul>
                         </li>
-                        <li><a href="contact">Contact</a></li>
+                        <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </nav>
                 <!-- #nav-menu-container -->
@@ -217,25 +217,25 @@
                         <h1>Testing</h1>
                         <form id='form-upload_data_test' method='POST' enctype='multipart/form-data' class='form'>
                             <label for='age'>AGE</label>
-                            <input id='age' name='age_input' class='form form-control' placeholder='AGE (Rekomendasi input -0.1 hingga 0.2)'>
+                            <input id='age' name='age_input' class='form form-control' placeholder='AGE (Rekomendasi input -0.2 hingga 0.2)' required>
                             <label for='sex'>SEX</label>
-                            <input id='sex' name='sex_input' class='form form-control' placeholder='SEX  (Rekomendasi input -0.04 hingga 0.2)'>
+                            <input id='sex' name='sex_input' class='form form-control' placeholder='SEX  (Rekomendasi input -0.2 hingga 0.2)' required>
                             <label for='bmi'>BMI</label>
-                            <input id='bmi' name='bmi_input' class='form form-control' placeholder='BMI  (Rekomendasi input -0.09 hingga 0.2)'>
+                            <input id='bmi' name='bmi_input' class='form form-control' placeholder='BMI  (Rekomendasi input -0.2 hingga 0.2)' required>
                             <label for='bp'>BP</label>
-                            <input id='bp' name='bp_input' class='form form-control' placeholder='BP  (Rekomendasi input -0.1 hingga 0.2)'>
+                            <input id='bp' name='bp_input' class='form form-control' placeholder='BP  (Rekomendasi input -0.2 hingga 0.2)' required>
                             <label for='s1'>S1</label>
-                            <input id='s1' name='s1_input' class='form form-control' placeholder='S1  (Rekomendasi input -0.1 hingga 0.2)'>
+                            <input id='s1' name='s1_input' class='form form-control' placeholder='S1  (Rekomendasi input -0.2 hingga 0.2)' required>
                             <label for='s2'>S2</label>
-                            <input id='s2' name='s2_input' class='form form-control' placeholder='S2  (Rekomendasi input -0.1 hingga 0.2)'>
+                            <input id='s2' name='s2_input' class='form form-control' placeholder='S2  (Rekomendasi input -0.2 hingga 0.2)' required>
                             <label for='s3'>S3</label>
-                            <input id='s3' name='s3_input' class='form form-control' placeholder='S3  (Rekomendasi input -0.1 hingga 0.2)'>
+                            <input id='s3' name='s3_input' class='form form-control' placeholder='S3  (Rekomendasi input -0.2 hingga 0.2)' required>
                             <label for='s4'>S4</label>
-                            <input id='s4' name='s4_input' class='form form-control' placeholder='S4  (Rekomendasi input -0.1 hingga 0.2)'>
+                            <input id='s4' name='s4_input' class='form form-control' placeholder='S4  (Rekomendasi input -0.2 hingga 0.2)' required>
                             <label for='s5'>S5</label>
-                            <input id='s5' name='s5_input' class='form form-control' placeholder='S5  (Rekomendasi input -0.1 hingga 0.2)'>
+                            <input id='s5' name='s5_input' class='form form-control' placeholder='S5  (Rekomendasi input -0.2 hingga 0.2)' required>
                             <label for='s6'>S6</label>
-                            <input id='s6' name='s6_input' class='form form-control' placeholder='S6  (Rekomendasi input -0.1 hingga 0.2)'>
+                            <input id='s6' name='s6_input' class='form form-control' placeholder='S6  (Rekomendasi input -0.2 hingga 0.2)' required>
                             <input id='mode' name='mode' type='hidden' value='Testing'>
                             <br>
                             <button type="submit" class="btn btn-primary">Test</button>
@@ -246,43 +246,7 @@
                             <h3 class='text-center'>Nilai Diabetes = {{ predict }}</h3>
                         </div>
                         {% endif %}
-                        <!-- <form id="upload-form" method="POST" enctype="multipart/form-data" class="">
 
-                            <label>Pilih Citra</label>
-                            <div class="input-group" style="display: block;
-    								margin-left: auto;
-    								margin-right: auto;">
-                                <span class="input-group-btn">
-									<span class="btn btn-default btn-file">
-									Browse… <input type="file" name="query_img" id="imgInp">
-									</span>
-                                </span>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-
-                        <div class="col-md-3">
-                            <div class="col-centered">
-                                <img id="img-upload" />
-                            </div>
-                        </div>
-                    </div>
-
-                    {% if query_path %}
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Query Citra</label>
-                            <img style="width: 100%;" class="img-responsive thumbnail" src="{{query_path}}">
-                        </div>
-                        <div class="col-md-6">
-                            <label>Hasil Konversi Citra</label>
-                            <a href="{{url_for('static', filename='assets/greyscale_citra/hasil/')}}{{ img }}.jpg">
-                                <img style="width: 100%;" class="img-responsive thumbnail" src="{{url_for('static', filename='assets/greyscale_citra/hasil/')}}{{ img }}.jpg">
-                            </a>
-                        </div>
-                        {% endif %}
-                    </div> -->
                     </div>
                 </div>
             </div>

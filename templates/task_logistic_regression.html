@@ -15,7 +15,7 @@
     <!-- meta character set -->
     <meta charset="UTF-8">
     <!-- Site Title -->
-    <title>Linear Regression</title>
+    <title>Logistic Regression</title>
 
     <!--
 			Google Font
@@ -51,19 +51,19 @@
                 <nav id="nav-menu-container">
                     <ul class="nav-menu">
                         <li><a href="../">Home</a></li>
-                       <li><a href="notes">Lecture Notes</a></li>
-                        
-						<li class="menu-has-children menu-active"><a href="">Tugas</a>
-							<ul>
+                        <li><a href="notes">Lecture Notes</a></li>
+                               
+                        <li class="menu-has-children menu-active"><a href="">Tugas</a>
+                            <ul>
                                 <li><a href="task_linear_regression">Linear Regression</a></li>
                                 <li><a href="task_logistic_linear">Logistic Regression</a></li>
                                 <li><a href="cart">CART</a></li>
                                 <li><a href="kmeans">K-means Clustering - Segmentasi Citra</a></li>
                                 <li><a href="#">Artificial Neural Networks</a></li>
                             </ul>
-						</li>
-						<li><a href="contact">Contact</a></li>
-					</ul>
+                        </li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
                 </nav>
                 <!-- #nav-menu-container -->
             </div>
@@ -104,13 +104,17 @@
                     <div class="section-title text-center">
                         <h1>Dataset</h1>
                         <!-- <h4> Brief Description</h4> -->
-                        <p> From Bradley Efron, Trevor Hastie, Iain Johnstone and Robert Tibshirani (2004) "Least Angle Regression," <i>Annals of Statistics</i> (with discussion), 407-499, we have "Ten baseline variables, age, sex, body mass index, average
-                            blood pressure, and six blood serum measurements were obtained for each of n = 442 diabetes patients, as well as the response of interest, a quantitative measure of disease progression one year after baseline." In the tab delimited
-                            file above, the variables are named AGE SEX BMI BP S1 S2 S3 S4 S5 S6 Y
-                        </p>
-                        <p>Jumlah data pada dataset diabetes adalah 442. Jumlah fitur yang dimiliki Diabetes Dataset adalah 10 fitur yang terdiri dari usia, jenis kelamin, indeks massa tubuh, tekanan darah rata-rata dan enam pengukuran serum darah yaitu
-                            serum 1, serum 2, serum 3, serum 4, serum 5 dan serum 6. Target dari Diabetes Dataset adalah ukuran kuantitatif perkembangan penyakit diabetes dalam satu tahun dengan keadaan sesuai atibut/fitur. Tujuan dari Diabetes Dataset
-                            adalah melihat pengaruh atribut-atribut pendukung penyakit diabetes terhadap hasil target. Pada Diabetes Dataset terdapat 442 responden yang menujukan jumlah data yang dapat digunakan.
+                        <p> Dataset yang digunakan adalah Breast Cancer Wisconsin (Diagnostic) Dataset. Dataset tersebut berasal dari penelitian Bapak Dr. William H. Wolberg, Bapak Nick Street dan Bapak Olvi L. Mangasarian yang berjudul “Nuclear feature extraction
+                            for breast tumor diagnosis” pada tahun 1993 dan “Breast cancer diagnosis and prognosis via linear programming” pada tahun 1995. Dataset tersebut dapat diunduh menggunakan library sklearn.datasets dan berada pada kelas load_diabetes().
+                            Jumlah fitur yang dimiliki Breast Cancer Wisconsin (Diagnostic) Dataset adalah 30 fitur yang terdiri dari radius (mean), texture(mean), perimeter (mean), area(mean), smoothness(mean), compactness(mean), concavity(mean), concave
+                            points(mean), symmetry (mean), fractal dimension (mean), radius (standard error), texture (standard error), perimeter (standard error), area (standard error), smoothness (standard error), compactness (standard error), concavity
+                            (standard error), concave points (standard points), symmetry (standard error), fractal dimension (standard error), radius (worst), texture (worst), perimeter (worst), area (worst), smoothness (worst), compactness (worst), compactness
+                            (worst), concavity (worst), concave points (worst), symmetry (worst) dan fractal dimenstion (worst). Target dari Breast Cancer Wisconsin (Diagnostic) Dataset adalah 1 dan 0 yang artinya 1 untuk WDBC-Walignant / Kelas Wisconsin
+                            Kanker Paru-paru Ganas dan 0 untuk WDBC-Benign / Kelas Wisconsin Kanker Paru-paru Jinak. Tujuan dari Breast Cancer Wisconsin (Diagnostic) Dataset adalah melihat apakah kanker paru-paru seseorang tergolong kanker ganas atau
+                            kanker jinak dengan menggunakan citra paru-paru dengan fitur yang terdiri dari radius (mean), texture(mean), perimeter (mean), area(mean), smoothness(mean), compactness(mean), concavity(mean), concave points(mean), symmetry
+                            (mean), fractal dimension (mean), radius (standard error), texture (standard error), perimeter (standard error), area (standard error), smoothness (standard error), compactness (standard error), concavity (standard error),
+                            concave points (standard points), symmetry (standard error), fractal dimension (standard error), radius (worst), texture (worst), perimeter (worst), area (worst), smoothness (worst), compactness (worst), compactness (worst),
+                            concavity (worst), concave points (worst), symmetry (worst) dan fractal dimension (worst).
                         </p>
                     </div>
                 </div>
@@ -127,13 +131,34 @@
                     <div class="section-title text-center">
                         <h1>Training</h1>
                         <form id='upload-form' method='POST' enctype="multipart/form-data" class="">
-                            <div class='form-group'>
+                            <!-- <div class='form-group'>
                                 <label for='split_data_test'>Persentase Data Test (dalam persen)</label>
                                 <input type='text' class='form-control' id='split_data_test' name='query_split_data_test' placeholder="Presentasi Data Test (dalam persen)" required>
+                            </div> -->
+                            <div class="form-group">
+                                <label for="komposisi" id='komposisiLabel'>Komposisi</label>
+                                <input type="range" class="custom-range" min="5" max="95" step="1" value='80' id="komposisi" name='komposisi'>
                             </div>
+                            <script>
+                                var komposisi = document.getElementById('komposisi');
+                                var komposisiLabel = document.getElementById('komposisiLabel')
+                                komposisiLabel.innerHTML = 'Komposisi : ' + komposisi.value + '% training, ' + (100 - komposisi.value) + '% testing'
+                                komposisi.onchange = function() {
+                                    var testing = 100 - this.value
+                                    komposisiLabel.innerHTML = 'Komposisi : ' + this.value + '% training, ' + testing + '% testing';
+                                }
+                                komposisi.oninput = function() {
+                                    var testing = 100 - this.value
+                                    komposisiLabel.innerHTML = 'Komposisi : ' + this.value + '% training, ' + testing + '% testing';
+                                }
+                            </script>
                             <div class='form-group'>
                                 <label for='epochs'>Banyak Epoch</label>
                                 <input type='text' class='form-control' id='epochs' name='query_epochs' placeholder="Epochs" required>
+                            </div>
+                            <div class='form-group'>
+                                <label for='learning_rate'>Learning Rate</label>
+                                <input type='text' class='form-control' id='learning_rate' name='learning_rate' placeholder="Learning Rate" required>
                             </div>
                             <label>Tampilkan Proses Training</label>
                             <div class='form-group'>
@@ -162,7 +187,18 @@
                         <h3 class='text-center'>Plotting</h3>
                         <img alt='Plot Linear Regression' src="{{url_for('static', filename='assets/img/PlotLinReg.png')}}" style="display:block;margin-left:auto;margin-right:auto;"> -->
                     </div>
+                    {% endif %} {% if precision is defined %}
+                    <div class='section-title'>
+                        <h3 class='text-center'>Precision</h3>
+                        <div class='text-center'>{{ precision }}</div>
+                    </div>
+                    {% endif %} {% if recall is defined %}
+                    <div class='section-title'>
+                        <h3 class='text-center'>Recall</h3>
+                        <div class='text-center'>{{ recall }}</div>
+                    </div>
                     {% endif %}
+
                 </div>
                 {% if step_trains is defined %}
                 <div class='col justify-content-center'>
@@ -170,14 +206,30 @@
                     <table class='table table-striped'>
                         <tr>
                             <th>Epoch Ke-</th>
-                            {% for index_dim in range(11) %}
+                            {% for index_dim in range(16) %}
                             <th>w{{ loop.index - 1 }}</th>
                             {% endfor %}
                         </tr>
                         <tr>
                             {% for index_epoch in range(1, epochs + 1) %}
                             <td> {{ index_epoch }} </td>
-                            {% for index_dim in range(11) %}
+                            {% for index_dim in range(16) %}
+                            <td> {{ step_trains[index_epoch-1][index_dim] }} </td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    <table class='table table-striped'>
+                        <tr>
+                            <th>Epoch Ke-</th>
+                            {% for index_dim in range(16, 31) %}
+                            <th>w{{ loop.index + 15 }}</th>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            {% for index_epoch in range(1, epochs + 1) %}
+                            <td> {{ index_epoch }} </td>
+                            {% for index_dim in range(16, 31) %}
                             <td> {{ step_trains[index_epoch-1][index_dim] }} </td>
                             {% endfor %}
                         </tr>
@@ -199,73 +251,29 @@
                     <div class="section-title text-center">
                         <h1>Testing</h1>
                         <form id='form-upload_data_test' method='POST' enctype='multipart/form-data' class='form'>
-                            <label for='age'>AGE</label>
-                            <input id='age' name='age_input' class='form form-control' placeholder='AGE (Rekomendasi input -0.1 hingga 0.2)'>
-                            <label for='sex'>SEX</label>
-                            <input id='sex' name='sex_input' class='form form-control' placeholder='SEX  (Rekomendasi input -0.04 hingga 0.2)'>
-                            <label for='bmi'>BMI</label>
-                            <input id='bmi' name='bmi_input' class='form form-control' placeholder='BMI  (Rekomendasi input -0.09 hingga 0.2)'>
-                            <label for='bp'>BP</label>
-                            <input id='bp' name='bp_input' class='form form-control' placeholder='BP  (Rekomendasi input -0.1 hingga 0.2)'>
-                            <label for='s1'>S1</label>
-                            <input id='s1' name='s1_input' class='form form-control' placeholder='S1  (Rekomendasi input -0.1 hingga 0.2)'>
-                            <label for='s2'>S2</label>
-                            <input id='s2' name='s2_input' class='form form-control' placeholder='S2  (Rekomendasi input -0.1 hingga 0.2)'>
-                            <label for='s3'>S3</label>
-                            <input id='s3' name='s3_input' class='form form-control' placeholder='S3  (Rekomendasi input -0.1 hingga 0.2)'>
-                            <label for='s4'>S4</label>
-                            <input id='s4' name='s4_input' class='form form-control' placeholder='S4  (Rekomendasi input -0.1 hingga 0.2)'>
-                            <label for='s5'>S5</label>
-                            <input id='s5' name='s5_input' class='form form-control' placeholder='S5  (Rekomendasi input -0.1 hingga 0.2)'>
-                            <label for='s6'>S6</label>
-                            <input id='s6' name='s6_input' class='form form-control' placeholder='S6  (Rekomendasi input -0.1 hingga 0.2)'>
+                            <h4 class='text-center'>Input Data Test</h4>
+                            <h4 class='text-center'>Input 30 nilai dengan koma sebagai pemisah</h4>
+                            <h5 class='text-center'>
+                                radius_mean, texture_mean, perimeter_mean, area_mean, smootheshness_mean, compactness_mean, concavity_mean, concave points_mean, symmetry_mean, radius_se, texture_se, perimeter_se, area_se, smoothness_se, compactness_se, concavity_se, concave_se, concave
+                                points_se, symmetry_se, fractal_dimension_se, radius_worst, perimeter worst, area_worst, smoothness_worst, compactness_worst, concavity_worst, concave points_worst, symmetry_worst, fractal_dimension_worst
+                            </h5>
+                            <h6 class="text-center">
+                                (6.98 - 28.1), (9.71 - 39.3), (43.8 - 189), (144 - 2500), (0.05 - 0.16), (0.02 - 0.35), (0 - 0.43), (0 - 0.2), (0.11 - 0.3),
+                                <br> (0.05 - 0.1), (0.11 - 2.87), (0.36 - 4.88), (0.76 - 22), (6.8 - 542), (0 - 0.03), (0 - 0.14), (0 - 0.4), (0 - 0.05),
+                                <br> (0.01 - 0.08), (0 - 0.03), (7.93 - 36), (12 - 49.5), (50.4 - 251), (185 - 4250), (0.07 - 0.22), (0.03 - 1.06), (0 - 1.25),
+                                <br> (0 - 0.29), (0.16 - 0.66), (0.06 - 0.21)
+                            </h6>
+                            <textarea id='input_test' name='input_test' class='form form-control'>18, 10.3, 60, 1500, 0.08, 0.1, 0.1, 0.1, 0.1, 0.08, 1, 2, 10, 250, 0.02, 0.05, 0.1, 0.002, 0.04, 0.0015, 18, 25, 125, 2500, 0.1, 0.5, 0.712, 0.1, 0.3, 0.1</textarea>
                             <input id='mode' name='mode' type='hidden' value='Testing'>
                             <br>
                             <button type="submit" class="btn btn-primary">Test</button>
                         </form>
-                        {% if predict is defined %}
+                        {% if kelas is defined %}
                         <br>
                         <div class='section-title'>
-                            <h3 class='text-center'>Nilai Diabetes = {{ predict }}</h3>
+                            <h3 class='text-center'>Kelas = {{ kelas }}</h3>
                         </div>
                         {% endif %}
-                        <!-- <form id="upload-form" method="POST" enctype="multipart/form-data" class="">
-
-                            <label>Pilih Citra</label>
-                            <div class="input-group" style="display: block;
-    								margin-left: auto;
-    								margin-right: auto;">
-                                <span class="input-group-btn">
-									<span class="btn btn-default btn-file">
-									Browse… <input type="file" name="query_img" id="imgInp">
-									</span>
-                                </span>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-
-                        <div class="col-md-3">
-                            <div class="col-centered">
-                                <img id="img-upload" />
-                            </div>
-                        </div>
-                    </div>
-
-                    {% if query_path %}
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label>Query Citra</label>
-                            <img style="width: 100%;" class="img-responsive thumbnail" src="{{query_path}}">
-                        </div>
-                        <div class="col-md-6">
-                            <label>Hasil Konversi Citra</label>
-                            <a href="{{url_for('static', filename='assets/greyscale_citra/hasil/')}}{{ img }}.jpg">
-                                <img style="width: 100%;" class="img-responsive thumbnail" src="{{url_for('static', filename='assets/greyscale_citra/hasil/')}}{{ img }}.jpg">
-                            </a>
-                        </div>
-                        {% endif %}
-                    </div> -->
                     </div>
                 </div>
             </div>
@@ -324,4 +332,4 @@
     <script src="{{url_for('static', filename='assets/js/main.js')}}"></script>
 </body>
 
-</html>`
+</html>
