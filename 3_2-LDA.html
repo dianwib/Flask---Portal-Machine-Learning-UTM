@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>7_1-CNN</title>
+<title>3_2-LDA</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13078,7 +13078,7 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Machine-Learning">Machine Learning<a class="anchor-link" href="#Machine-Learning">&#182;</a></h1><h2 id="Indah-Agustien-Siradjuddin">Indah Agustien Siradjuddin<a class="anchor-link" href="#Indah-Agustien-Siradjuddin">&#182;</a></h2><hr>
-<h2 id="Convolutional-Neural-Network">Convolutional Neural Network<a class="anchor-link" href="#Convolutional-Neural-Network">&#182;</a></h2><p>Semester Gasal 2019-2020</p>
+<h2 id="Linear-Discriminant-Analysis">Linear Discriminant Analysis<a class="anchor-link" href="#Linear-Discriminant-Analysis">&#182;</a></h2><p>Semester Gasal 2019-2020</p>
 
 </div>
 </div>
@@ -13086,15 +13086,19 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><em>Deep Learning</em> memiliki arsitektur Jaringan Syaraf Tiruan yang memiliki lebih banyak layer dan neuron (<em>deeper</em> dan <em>wider</em>).  Setiap layer memiliki fungsi tersendiri.
-Kelebihan dari Deep Learning :</p>
+<h3 id="PCA-untuk-Reduksi-Dimensi">PCA untuk Reduksi Dimensi<a class="anchor-link" href="#PCA-untuk-Reduksi-Dimensi">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li>Arsitektur yang lebih banyak layer dan neuron, dapat menangkap data secara detil </li>
-<li>Tidak dibutuhkan <em>Feature engineering</em>, deep learning memiliki kemampuan <em>feature learning</em> </li>
+<li>PCA dapat digunakan untuk memproyeksikan suatu data ke dalam ruang dimensi yang lebih rendah.  </li>
+<li>Tidak dapat membedakan data antara kelas</li>
 </ul>
-<p>Convolutional Neural Network - CNN, merupakan salah satu arsitektur  Deep learning. <br></p>
-<p>Architecture of CNN :
-<img src="{{url_for('static', filename='assets/images/7_cnn.jpg')}}" alt=""></p>
+<p><img src="images/3_kelemahanPCA.jpg" alt="Learning"></p>
+<p>Sumber : <cite data-cite="4027820/DUGKM6UH"></cite></p>
 
 </div>
 </div>
@@ -13102,12 +13106,16 @@ Kelebihan dari Deep Learning :</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Convolutional-Layers-:">Convolutional Layers :<a class="anchor-link" href="#Convolutional-Layers-:">&#182;</a></h3><ul>
-<li>*Image Convolution : $n$ kernels atau filters </li>
-<li>Setiap channel dari citra dikonvolusi dengan setiap  kernel</li>
-<li>Jumlahkan semua hasil konvolusi : feature maps.  Oleh karena itu, jika terdapat $n$ kernel, maka jumlah <em>feature map</em> yang dihasilkan adalah $n$</li>
-</ul>
-<p><img src="{{url_for('static', filename='assets/images/7_convolution.jpg')}}" alt=""></p>
+<h3 id="LDA-untuk-Reduksi-Dimensi">LDA untuk Reduksi Dimensi<a class="anchor-link" href="#LDA-untuk-Reduksi-Dimensi">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Hasil proyeksi data dengan LDA dapat memisahkan data antar kelas</p>
+<p><img src="images/3_lda.jpg" alt="Learning">
+Sumber : <cite data-cite="4027820/DUGKM6UH"></cite></p>
 
 </div>
 </div>
@@ -13115,9 +13123,77 @@ Kelebihan dari Deep Learning :</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Rectified-Linear-Units-(RELU)">Rectified Linear Units (RELU)<a class="anchor-link" href="#Rectified-Linear-Units-(RELU)">&#182;</a></h3><p>Fungsi aktivasi RELU activation digunakan agar semua nilai pada <em>feature maps</em> adalah positif :
+<p>Komponen LDA, yaitu :</p>
+<ol>
+<li><em>Matrix within class scatter</em> : meminimalkan penyebaran data antara data pada kelas yang sama, dengan cara meminimalkan variance data</li>
+<li><em>Matrix between class scatter</em> : memaksimalkan perbedaan antara kelas yang satu dengan kelas yang lain, dengan cara memaksimal selisih mean data antara kelas</li>
+</ol>
+<p><img src="images/3_ldaProcess.jpg" alt="Learning">
+Sumber : <cite data-cite="4027820/DUGKM6UH"></cite></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 \begin{eqnarray}
-f(x)=max(0,x)
+S_w&amp;=&amp;\sum_{i=1}^{C}S_i\\
+S_B&amp;=&amp;\sum_{i=1}^{C}N_i(\mu{i}-\mu)(\mu{i}-\mu)^T\\
+\mu&amp;=&amp;\frac{1}{N}\sum_{i=1}{C}N_i\mu_i
+\end{eqnarray}<p>dimana <br>
+$S_w$ adalah matriks within class scatter, $C$ adalah jumlah kelas, dan $S_i$ adalah covariance dari kelas ke-$i$ <br>
+$S_B$ adalah matriks between scatter, $\mu_i$ adalah rata-rata pada kelas ke-$i$, $N$ adalah jumlah data total, $N_i$ adalah jumlah data kelas ke-$i$, dan $\mu$ adalah rata-rata dari seluruh kelas</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Eigen vector dan eigen value dihitung dengan menggunakan Persamaan berikut :</p>
+\begin{eqnarray}
+S_{w}^{-1}S_Bv=\lambda v
+\end{eqnarray}
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="LDA-untuk-Klasifikasi">LDA untuk Klasifikasi<a class="anchor-link" href="#LDA-untuk-Klasifikasi">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>LDA untuk klasifikasi dihitung berdasarkan teorema Bayes, yaitu dengan cara menghitung probabilitas masing-masing kelas.  Hasil klasifikasi ditentunkan berdasarkan nilai Probabilitas tertinggi ini, yaitu</p>
+\begin{eqnarray}
+P(Y=k | X=x)=\frac{P(k)\times P(x | k)}{\sum_{l=1}^{K}P(l) \times P(x | l)}
+\end{eqnarray}<p>dimana <br>
+$P(Y=k | X=x)$ adalah probabilitas kelas $Y=k$ untuk data $x$ <br>
+$P(k)$ adalah probabilitas kelas $k$, yaitu rasio jumlah data kelas $k$ terhadap seluruh data <em>training</em> <br>
+$P(x | k)$ adalah estimasi probabilitas bahwa $x$ adalah kelas $k$ <br></p>
+<p>Data training untuk LDA diasumsikan terdistribusi Gaussian, sehingga persamaan fungsi discriminant tersebut diatas, menjadi sebagai berikut :</p>
+\begin{eqnarray}
+\delta_k(x)=x.\frac{\mu_k}{\sigma}-\frac{\mu_k}{2\sigma^2}+log(p_k)
+\end{eqnarray}<p>dimana <br>
+$x$ adalah data input atau fitur <br>
+$\delta_k(x)$ adalah nilai discriminant, yang merupakan nilai bahwa data $x$ merupakan anggota kelas $k$&lt;br&gt;
+$\mu_k$ adalah nilai rata-rata data training pada kelas $k$<br>
+$\sigma$ adalah rata-rata variance untuk semua kelas, nilai variance antara kelas yang satu dengan yang lain adalah sama, atau hampir sama <br>
+$p_k$ merupakan rasio antara data kelas k terhadap seluruh data training<br></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Jika data fitur adalah data dengan lebih dari satu dimensi (multivariate), maka discriminant function LDA adalah :
+\begin{eqnarray}
+\delta_k(x)=x^T.\Sigma^{-1}\mu_k-\frac{1}{2}\mu_k^T\Sigma^{-1}-\mu_k+log(p_k)
 \end{eqnarray}</p>
 
 </div>
@@ -13126,187 +13202,47 @@ f(x)=max(0,x)
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Subsampling/Pooling">Subsampling/Pooling<a class="anchor-link" href="#Subsampling/Pooling">&#182;</a></h3><p>digunakan untuk mengurangi ukuran <em>feature map</em> dengan cara menyatukan fitur-fitur yang dianggap memiliki nilai hampir sama  (hanya ukuran, bukan jumlah <em>feature map</em>).  <br>
-<em>max pooling</em> atau <em>average pooling</em> :
-<img src="{{url_for('static', filename='assets/images/7_pooling.jpg')}}" alt=""></p>
-
+<h2 id="LDA-dengan-scikit">LDA dengan scikit<a class="anchor-link" href="#LDA-dengan-scikit">&#182;</a></h2>
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Fully-Connected-Layer">Fully Connected Layer<a class="anchor-link" href="#Fully-Connected-Layer">&#182;</a></h3><p>atau dikenal dengan <em>densed layer</em> . Output dari klasifikasi adalah output dari layer ini (FC) <br></p>
-<p>Input dari FC layer adalah array 1D, oleh karena itu harus dilakukan <em>reshape</em> feature map.</p>
-<p>Misalkan :</p>
-<ul>
-<li>Jumlah kelas adalah tiga</li>
-<li>output layer adalah <em>one hot encoding</em>, maka jumlah neuron pada output layer adalah tiga, yaitu [1 0 0], [0 1 0], and [0 0 1]</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="CNN-dengan-KERAS-framework">CNN dengan KERAS framework<a class="anchor-link" href="#CNN-dengan-KERAS-framework">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">keras.datasets</span> <span class="k">import</span> <span class="n">mnist</span>
-
-<span class="p">(</span><span class="n">X_trainOrg</span><span class="p">,</span> <span class="n">y_trainOrg</span><span class="p">),</span> <span class="p">(</span><span class="n">X_testOrg</span><span class="p">,</span> <span class="n">y_testOrg</span><span class="p">)</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>Using TensorFlow backend.
-C:\Users\Indah Agustin\Anaconda3\lib\site-packages\tensorflow\python\framework\dtypes.py:516: FutureWarning: Passing (type, 1) or &#39;1type&#39; as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / &#39;(1,)type&#39;.
-  _np_qint8 = np.dtype([(&#34;qint8&#34;, np.int8, 1)])
-C:\Users\Indah Agustin\Anaconda3\lib\site-packages\tensorflow\python\framework\dtypes.py:517: FutureWarning: Passing (type, 1) or &#39;1type&#39; as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / &#39;(1,)type&#39;.
-  _np_quint8 = np.dtype([(&#34;quint8&#34;, np.uint8, 1)])
-C:\Users\Indah Agustin\Anaconda3\lib\site-packages\tensorflow\python\framework\dtypes.py:518: FutureWarning: Passing (type, 1) or &#39;1type&#39; as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / &#39;(1,)type&#39;.
-  _np_qint16 = np.dtype([(&#34;qint16&#34;, np.int16, 1)])
-C:\Users\Indah Agustin\Anaconda3\lib\site-packages\tensorflow\python\framework\dtypes.py:519: FutureWarning: Passing (type, 1) or &#39;1type&#39; as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / &#39;(1,)type&#39;.
-  _np_quint16 = np.dtype([(&#34;quint16&#34;, np.uint16, 1)])
-C:\Users\Indah Agustin\Anaconda3\lib\site-packages\tensorflow\python\framework\dtypes.py:520: FutureWarning: Passing (type, 1) or &#39;1type&#39; as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / &#39;(1,)type&#39;.
-  _np_qint32 = np.dtype([(&#34;qint32&#34;, np.int32, 1)])
-C:\Users\Indah Agustin\Anaconda3\lib\site-packages\tensorflow\python\framework\dtypes.py:525: FutureWarning: Passing (type, 1) or &#39;1type&#39; as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / &#39;(1,)type&#39;.
-  np_resource = np.dtype([(&#34;resource&#34;, np.ubyte, 1)])
-C:\Users\Indah Agustin\Anaconda3\lib\site-packages\tensorboard\compat\tensorflow_stub\dtypes.py:541: FutureWarning: Passing (type, 1) or &#39;1type&#39; as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / &#39;(1,)type&#39;.
-  _np_qint8 = np.dtype([(&#34;qint8&#34;, np.int8, 1)])
-C:\Users\Indah Agustin\Anaconda3\lib\site-packages\tensorboard\compat\tensorflow_stub\dtypes.py:542: FutureWarning: Passing (type, 1) or &#39;1type&#39; as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / &#39;(1,)type&#39;.
-  _np_quint8 = np.dtype([(&#34;quint8&#34;, np.uint8, 1)])
-C:\Users\Indah Agustin\Anaconda3\lib\site-packages\tensorboard\compat\tensorflow_stub\dtypes.py:543: FutureWarning: Passing (type, 1) or &#39;1type&#39; as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / &#39;(1,)type&#39;.
-  _np_qint16 = np.dtype([(&#34;qint16&#34;, np.int16, 1)])
-C:\Users\Indah Agustin\Anaconda3\lib\site-packages\tensorboard\compat\tensorflow_stub\dtypes.py:544: FutureWarning: Passing (type, 1) or &#39;1type&#39; as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / &#39;(1,)type&#39;.
-  _np_quint16 = np.dtype([(&#34;quint16&#34;, np.uint16, 1)])
-C:\Users\Indah Agustin\Anaconda3\lib\site-packages\tensorboard\compat\tensorflow_stub\dtypes.py:545: FutureWarning: Passing (type, 1) or &#39;1type&#39; as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / &#39;(1,)type&#39;.
-  _np_qint32 = np.dtype([(&#34;qint32&#34;, np.int32, 1)])
-C:\Users\Indah Agustin\Anaconda3\lib\site-packages\tensorboard\compat\tensorflow_stub\dtypes.py:550: FutureWarning: Passing (type, 1) or &#39;1type&#39; as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / &#39;(1,)type&#39;.
-  np_resource = np.dtype([(&#34;resource&#34;, np.ubyte, 1)])
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">X_trainOrg</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">X_trainOrg</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">datasets</span>
+<span class="kn">from</span> <span class="nn">sklearn.discriminant_analysis</span> <span class="k">import</span> <span class="n">LinearDiscriminantAnalysis</span> <span class="k">as</span> <span class="n">LDA</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>(60000, 28, 28)
-[[  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-    0   0   0   0   0   0   0   0   0   0]
- [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-    0   0   0   0   0   0   0   0   0   0]
- [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-    0   0   0   0   0   0   0   0   0   0]
- [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-    0   0   0   0   0   0   0   0   0   0]
- [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-    0   0   0   0   0   0   0   0   0   0]
- [  0   0   0   0   0   0   0   0   0   0   0   0   3  18  18  18 126 136
-  175  26 166 255 247 127   0   0   0   0]
- [  0   0   0   0   0   0   0   0  30  36  94 154 170 253 253 253 253 253
-  225 172 253 242 195  64   0   0   0   0]
- [  0   0   0   0   0   0   0  49 238 253 253 253 253 253 253 253 253 251
-   93  82  82  56  39   0   0   0   0   0]
- [  0   0   0   0   0   0   0  18 219 253 253 253 253 253 198 182 247 241
-    0   0   0   0   0   0   0   0   0   0]
- [  0   0   0   0   0   0   0   0  80 156 107 253 253 205  11   0  43 154
-    0   0   0   0   0   0   0   0   0   0]
- [  0   0   0   0   0   0   0   0   0  14   1 154 253  90   0   0   0   0
-    0   0   0   0   0   0   0   0   0   0]
- [  0   0   0   0   0   0   0   0   0   0   0 139 253 190   2   0   0   0
-    0   0   0   0   0   0   0   0   0   0]
- [  0   0   0   0   0   0   0   0   0   0   0  11 190 253  70   0   0   0
-    0   0   0   0   0   0   0   0   0   0]
- [  0   0   0   0   0   0   0   0   0   0   0   0  35 241 225 160 108   1
-    0   0   0   0   0   0   0   0   0   0]
- [  0   0   0   0   0   0   0   0   0   0   0   0   0  81 240 253 253 119
-   25   0   0   0   0   0   0   0   0   0]
- [  0   0   0   0   0   0   0   0   0   0   0   0   0   0  45 186 253 253
-  150  27   0   0   0   0   0   0   0   0]
- [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  16  93 252
-  253 187   0   0   0   0   0   0   0   0]
- [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0 249
-  253 249  64   0   0   0   0   0   0   0]
- [  0   0   0   0   0   0   0   0   0   0   0   0   0   0  46 130 183 253
-  253 207   2   0   0   0   0   0   0   0]
- [  0   0   0   0   0   0   0   0   0   0   0   0  39 148 229 253 253 253
-  250 182   0   0   0   0   0   0   0   0]
- [  0   0   0   0   0   0   0   0   0   0  24 114 221 253 253 253 253 201
-   78   0   0   0   0   0   0   0   0   0]
- [  0   0   0   0   0   0   0   0  23  66 213 253 253 253 253 198  81   2
-    0   0   0   0   0   0   0   0   0   0]
- [  0   0   0   0   0   0  18 171 219 253 253 253 253 195  80   9   0   0
-    0   0   0   0   0   0   0   0   0   0]
- [  0   0   0   0  55 172 226 253 253 253 253 244 133  11   0   0   0   0
-    0   0   0   0   0   0   0   0   0   0]
- [  0   0   0   0 136 253 253 253 212 135 132  16   0   0   0   0   0   0
-    0   0   0   0   0   0   0   0   0   0]
- [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-    0   0   0   0   0   0   0   0   0   0]
- [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-    0   0   0   0   0   0   0   0   0   0]
- [  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
-    0   0   0   0   0   0   0   0   0   0]]
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="o">%</span><span class="k">matplotlib</span> inline
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">X_trainOrg</span><span class="p">[</span><span class="mi">500</span><span class="p">],</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">iris</span><span class="o">=</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>
+<span class="n">dataFeature</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span>
+<span class="n">dataTarget</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">clf</span><span class="o">=</span><span class="n">LDA</span><span class="p">()</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataFeature</span><span class="p">,</span><span class="n">dataTarget</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13319,28 +13255,14 @@ C:\Users\Indah Agustin\Anaconda3\lib\site-packages\tensorboard\compat\tensorflow
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[7]:</div>
+    <div class="prompt output_prompt">Out[5]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.image.AxesImage at 0x1dbc984c588&gt;</pre>
-</div>
-
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
-<div class="output_png output_subarea ">
-<img src="data:image/png;base64,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
-"
->
+<pre>LinearDiscriminantAnalysis(n_components=None, priors=None, shrinkage=None,
+                           solver=&#39;svd&#39;, store_covariance=False, tol=0.0001)</pre>
 </div>
 
 </div>
@@ -13351,10 +13273,10 @@ C:\Users\Indah Agustin\Anaconda3\lib\site-packages\tensorboard\compat\tensorflow
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">y_trainOrg</span><span class="p">[</span><span class="mi">500</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">dataFeature</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -13371,7 +13293,11 @@ C:\Users\Indah Agustin\Anaconda3\lib\site-packages\tensorboard\compat\tensorflow
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>3
+<pre>[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1 1 1
+ 1 1 1 1 1 1 1 1 1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2
+ 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+ 2 2]
 </pre>
 </div>
 </div>
@@ -13380,306 +13306,12 @@ C:\Users\Indah Agustin\Anaconda3\lib\site-packages\tensorboard\compat\tensorflow
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">keras.utils</span> <span class="k">import</span> <span class="n">to_categorical</span>
-<span class="c1">#one-hot encode target column</span>
-<span class="n">y_train</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">y_trainOrg</span><span class="p">)</span>
-<span class="n">y_test</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">y_testOrg</span><span class="p">)</span>
-</pre></div>
-
-    </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Referensi">Referensi<a class="anchor-link" href="#Referensi">&#182;</a></h2><div class="cite2c-biblio"></div>
 </div>
 </div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">y_train</span><span class="p">[</span><span class="mi">500</span><span class="p">])</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[48]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#reshape data to fit model</span>
-<span class="n">X_train</span> <span class="o">=</span> <span class="n">X_trainOrg</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">60000</span><span class="p">,</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">X_test</span> <span class="o">=</span> <span class="n">X_testOrg</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">keras.models</span> <span class="k">import</span> <span class="n">Sequential</span>
-<span class="kn">from</span> <span class="nn">keras.layers</span> <span class="k">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Conv2D</span><span class="p">,</span> <span class="n">Flatten</span>
-<span class="c1">#create model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
-<span class="c1">#add model layers</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span><span class="mi">28</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Flatten</span><span class="p">())</span>
-
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">))</span> <span class="c1">#output</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>WARNING: Logging before flag parsing goes to stderr.
-W1020 14:01:59.105266  6948 deprecation_wrapper.py:119] From C:\Users\Indah Agustin\Anaconda3\lib\site-packages\keras\backend\tensorflow_backend.py:74: The name tf.get_default_graph is deprecated. Please use tf.compat.v1.get_default_graph instead.
-
-W1020 14:01:59.190231  6948 deprecation_wrapper.py:119] From C:\Users\Indah Agustin\Anaconda3\lib\site-packages\keras\backend\tensorflow_backend.py:517: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
-
-W1020 14:01:59.206512  6948 deprecation_wrapper.py:119] From C:\Users\Indah Agustin\Anaconda3\lib\site-packages\keras\backend\tensorflow_backend.py:4138: The name tf.random_uniform is deprecated. Please use tf.random.uniform instead.
-
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#compile model using accuracy to measure model performance</span>
-<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>W1020 14:02:11.719328  6948 deprecation_wrapper.py:119] From C:\Users\Indah Agustin\Anaconda3\lib\site-packages\keras\optimizers.py:790: The name tf.train.Optimizer is deprecated. Please use tf.compat.v1.train.Optimizer instead.
-
-W1020 14:02:11.752698  6948 deprecation_wrapper.py:119] From C:\Users\Indah Agustin\Anaconda3\lib\site-packages\keras\backend\tensorflow_backend.py:3295: The name tf.log is deprecated. Please use tf.math.log instead.
-
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#train the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">),</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>W1020 14:02:37.197518  6948 deprecation.py:323] From C:\Users\Indah Agustin\Anaconda3\lib\site-packages\tensorflow\python\ops\math_grad.py:1250: add_dispatch_support.&lt;locals&gt;.wrapper (from tensorflow.python.ops.array_ops) is deprecated and will be removed in a future version.
-Instructions for updating:
-Use tf.where in 2.0, which has the same broadcast rule as np.where
-W1020 14:02:37.257520  6948 deprecation_wrapper.py:119] From C:\Users\Indah Agustin\Anaconda3\lib\site-packages\keras\backend\tensorflow_backend.py:986: The name tf.assign_add is deprecated. Please use tf.compat.v1.assign_add instead.
-
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Train on 60000 samples, validate on 10000 samples
-Epoch 1/3
-60000/60000 [==============================] - 111s 2ms/step - loss: 14.4692 - acc: 0.1022 - val_loss: 14.4902 - val_acc: 0.1010
-Epoch 2/3
-60000/60000 [==============================] - 115s 2ms/step - loss: 14.4711 - acc: 0.1022 - val_loss: 14.4902 - val_acc: 0.1010
-Epoch 3/3
-60000/60000 [==============================] - 117s 2ms/step - loss: 14.4711 - acc: 0.1022 - val_loss: 14.4902 - val_acc: 0.1010
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[31]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&lt;keras.callbacks.History at 0x19f5f30dfd0&gt;</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[38]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">result</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[52]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">X_trainOrg</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[52]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.image.AxesImage at 0x19f61fd1550&gt;</pre>
-</div>
-
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
-<div class="output_png output_subarea ">
-<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPsAAAD4CAYAAAAq5pAIAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAADh0RVh0U29mdHdhcmUAbWF0cGxvdGxpYiB2ZXJzaW9uMy4xLjAsIGh0dHA6Ly9tYXRwbG90bGliLm9yZy+17YcXAAANb0lEQVR4nO3df6gd9ZnH8c9ntVE0kSRK9GL91aioKCZrFMW6uJaUrCixYNcGWVxWuPmjShUhGyoYYVPQXeNKEAsparNLN6UQQ6WsNBLCuv5TEjWrMbFNNsT0JiHBDVrrP9H47B93Itfknjk3Z2bOnHuf9wsu55x5zsw8HPLJzDnz4+uIEICp7y/abgBAfxB2IAnCDiRB2IEkCDuQxOn9XJltfvoHGhYRHm96pS277UW2f297t+3lVZYFoFnu9Ti77dMk/UHSQkkjkrZIWhIRO0rmYcsONKyJLftNknZHxJ6IOCrpl5IWV1gegAZVCfuFkv445vVIMe1rbA/b3mp7a4V1Aaioyg904+0qnLSbHhFrJK2R2I0H2lRlyz4i6aIxr78p6UC1dgA0pUrYt0i6wvZltqdJ+oGkV+tpC0Ddet6Nj4gvbD8k6beSTpP0UkS8X1tnAGrV86G3nlbGd3agcY2cVANg8iDsQBKEHUiCsANJEHYgCcIOJEHYgSQIO5AEYQeSIOxAEoQdSIKwA0kQdiAJwg4kQdiBJAg7kARhB5Ig7EAShB1IgrADSRB2IIm+DtmMZlxzzTUda3fddVfpvMPDw6X1LVu2lNbfeeed0nqZ5557rrR+9OjRnpeNk7FlB5Ig7EAShB1IgrADSRB2IAnCDiRB2IEkGMV1Eli6dGlp/ZlnnulYmz59et3t1OaOO+4orW/evLlPnUwtnUZxrXRSje29kj6VdEzSFxGxoMryADSnjjPo/joiPqphOQAaxHd2IImqYQ9JG22/ZXvck6xtD9veantrxXUBqKDqbvytEXHA9hxJr9v+ICLeGPuGiFgjaY3ED3RAmypt2SPiQPF4WNIGSTfV0RSA+vUcdttn255x/Lmk70raXldjAOrV83F229/S6NZcGv068B8R8ZMu87Ab34PZs2eX1nfu3NmxNmfOnLrbqc3HH39cWr/vvvtK6xs3bqyznSmj9uPsEbFH0vU9dwSgrzj0BiRB2IEkCDuQBGEHkiDsQBLcSnoSOHLkSGl9xYoVHWurVq0qnfess84qre/bt6+0fvHFF5fWy8ycObO0vmjRotI6h95ODVt2IAnCDiRB2IEkCDuQBGEHkiDsQBKEHUiCW0lPcdu2bSutX399+YWL27eX36Lg2muvPeWeJmru3Lml9T179jS27sms0yWubNmBJAg7kARhB5Ig7EAShB1IgrADSRB2IAmuZ5/iVq5cWVp//PHHS+vz5s2rs51TMm3atNbWPRWxZQeSIOxAEoQdSIKwA0kQdiAJwg4kQdiBJLiePbkLLrigtN7t3uzXXXddne18zfr160vr9957b2Prnsx6vp7d9ku2D9vePmbabNuv295VPM6qs1kA9ZvIbvzPJZ04NMdySZsi4gpJm4rXAAZY17BHxBuSThx/aLGktcXztZLuqbkvADXr9dz48yPioCRFxEHbczq90fawpOEe1wOgJo1fCBMRayStkfiBDmhTr4feDtkekqTi8XB9LQFoQq9hf1XSA8XzByT9up52ADSl62687XWSbpd0nu0RSSskPSXpV7YflLRP0vebbBK9u//++0vr3e4b3+R94bt58803W1v3VNQ17BGxpEPpOzX3AqBBnC4LJEHYgSQIO5AEYQeSIOxAElziOglcddVVpfUNGzZ0rF1++eWl855++uDeTZwhm3vDkM1AcoQdSIKwA0kQdiAJwg4kQdiBJAg7kMTgHmTFV66++urS+mWXXdaxNsjH0bt59NFHS+sPP/xwnzqZGtiyA0kQdiAJwg4kQdiBJAg7kARhB5Ig7EASk/cgbCJl16tL0rJlyzrWnn766dJ5zzzzzJ566oehoaG2W5hS2LIDSRB2IAnCDiRB2IEkCDuQBGEHkiDsQBIcZ58CVq9e3bG2a9eu0nlnzpxZad3drpd//vnnO9bOOeecSuvGqem6Zbf9ku3DtrePmfak7f22txV/dzbbJoCqJrIb/3NJi8aZ/q8RMa/4+8962wJQt65hj4g3JB3pQy8AGlTlB7qHbL9b7ObP6vQm28O2t9reWmFdACrqNew/lTRX0jxJByWt6vTGiFgTEQsiYkGP6wJQg57CHhGHIuJYRHwp6WeSbqq3LQB16ynstsdee/g9Sds7vRfAYOh6nN32Okm3SzrP9oikFZJutz1PUkjaK2lpgz2igtdee63R5dvjDgX+lbLx4Z944onSeefNm1da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
-"
->
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[53]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">10</span><span class="p">])</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     </div>
   </div>
