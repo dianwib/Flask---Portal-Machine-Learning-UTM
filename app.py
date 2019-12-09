@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request
 import cv2
 from PIL import Image
-import linearregressionmanual, logisticregressionmanual
+import linearregressionmanual, logisticregressionmanual, artificialneuralnetworkmanual
 from sklearn.model_selection import train_test_split
-from sklearn.datasets import load_diabetes
+from sklearn.datasets import load_diabetes, load_breast_cancer, load_digits
 import numpy as np
 import matplotlib.pyplot as plt
+
+from keras.utils import to_categorical
+
 
 
 app = Flask(__name__)
@@ -181,6 +184,80 @@ def task_logistic_regression_route():
         return render_template('task_logistic_regression.html')
 
 
+
+
+@app.route('/task_artificial_neural_network', methods=['GET', 'POST'])
+def show_ann():
+    if request.method == 'POST':
+        mode = request.form['mode']
+        if mode == 'Training':
+            test_size = (100 - int(request.form['komposisi'])) / 100
+            epochs = int(request.form['query_epochs'])
+            learning_rate = float(request.form['learning_rate'])
+
+            digits = load_digits()
+            target_names = digits.target_names
+            simpan_data_test = digits.data[0:10, :]
+            np.save('static/assets/model/ann/data_test.npy', simpan_data_test)
+            data_training, data_test, target_training, target_test = \
+                train_test_split(digits.data, digits.target, test_size=test_size, random_state=0)
+            nInput = len(data_training[0])
+            nOutput = len(target_names)
+            nHidden = [nInput, nInput]
+            nn = artificialneuralnetworkmanual.NeuralNetwork(nInput, nHidden, nOutput)
+            train = nn.fit(data_training, to_categorical(target_training), epochs, learning_rate)
+
+            predict = nn.predict(data_test)
+            predictTrue = np.sum(predict == target_test)
+            akurasi = round(predictTrue / len(predict) * 100, 2)
+            return render_template('task_artificial_neural_network.html', akurasi=akurasi)
+        else:
+            optradioimage = request.form['optradioimg']
+            filenameimage = request.files['query_img_upload'].filename
+            # path_hasil = 'static/assets/hasil/'
+            if optradioimage != '' and filenameimage != '':
+                file = request.files['query_img_upload']
+
+                img = Image.open(file.stream)
+                uploaded_img_path = 'static/assets/img/ann/upload/'+ file.filename
+                result_name = file.filename[:-4]
+
+                img.save(uploaded_img_path)
+
+                img_input = cv2.imread(uploaded_img_path)
+                gray = cv2.cvtColor(img_input, cv2.COLOR_BGR2GRAY)
+                img_8x8 = cv2.resize(gray, (8, 8))
+                img_8x8 = img_8x8 / 255 * 16
+                gray_double = np.array(img_8x8, dtype=int)
+                
+                data = np.reshape(gray_double, (1, gray_double.shape[0]*gray_double.shape[1]))
+                data = np.float32(data)
+                print(data)
+
+                nInput = 64
+                nOutput = 10
+                nHidden = [nInput, nInput]
+                train = np.load('static/assets/model/ann/model.npy', allow_pickle=True)
+                nn = artificialneuralnetworkmanual.NeuralNetwork(nInput, nHidden, nOutput, train)
+                predict = nn.predict(data)
+                return render_template('task_artificial_neural_network.html', url_image=uploaded_img_path, kelas=predict)
+
+            elif  optradioimage != '':
+                data_test = np.load('static/assets/model/ann/data_test.npy')
+                gambar_ke = int(request.form['optradioimg'])
+                uploaded_img_path = 'static/assets/img/ann/img/' + str(gambar_ke) + '.png'
+                train = np.load('static/assets/model/ann/model.npy', allow_pickle=True)
+
+                nInput = 64
+                nOutput = 10
+                nHidden = [nInput, nInput]
+                nn = artificialneuralnetworkmanual.NeuralNetwork(nInput, nHidden, nOutput, train)
+                print(data_test[gambar_ke: gambar_ke + 1, :])
+                predict = nn.predict(data_test[gambar_ke: gambar_ke + 1, :])
+                return render_template('task_artificial_neural_network.html', url_image=uploaded_img_path, kelas=predict)
+    else:
+        return render_template('task_artificial_neural_network.html')
+
 #----------BRIAN
 # cart -----------------------------------------------------
 from sklearn import datasets 
@@ -325,7 +402,81 @@ def kmeans():
     else:
         return render_template('kmeans.html')
 # ----------------------------------------------------------
+from flask import Flask, render_template, request
+import cv2
+from PIL import Image
+from keras.layers import Conv2D, MaxPooling2D, Activation, Dense, Flatten
+from keras.models import Sequential, load_model
+import matplotlib.pyplot as plt
+import numpy as np
+import random
+from sklearn.model_selection import train_test_split
+import tensorflow as tf
 
+
+@app.route('/cnn', methods=['GET', 'POST'])
+def show_cnn():
+    class_fashion_label = ['T-shirt', 'Trouser', 'Pullover', 'Dress', 'Coat', 'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
+    if request.method == "POST":
+        mode = request.form['mode']
+        if mode == "Training":
+            test_size = (100 - int(request.form['komposisi'])) / 100
+            epochs = int(request.form['query_epoch'])
+            
+            mnist = tf.keras.datasets.fashion_mnist
+            (training_images, training_labels), (test_images, test_labels) = keras.datasets.fashion_mnist.load_data()
+            training_images = training_images.reshape(60000, 28, 28, 1)
+            training_images = training_images / 255.0
+            test_images = test_images.reshape(10000, 28, 28, 1)
+            test_images = test_images / 255.0
+            data_training, data_test, target_training, target_test = \
+            train_test_split(training_images, training_labels, test_size=test_size, random_state=0)
+            #if num_of_layers < 0 and num_of_layers > 10:
+            #    num_of_layers = 5
+
+            model = Sequential()
+            model.add(Conv2D(64, kernel_size=3, activation='relu', input_shape=(28,28,1)))
+            model.add(Conv2D(32, kernel_size=3, activation='relu'))
+            model.add(Flatten())
+            model.add(Dense(128, activation='relu'))
+            model.add(Dense(10, activation='softmax'))
+            model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+            print("training model...")
+            model.fit(training_images, training_labels, epochs=epochs)
+            model.summary()
+            
+            model.save('static/assets/model/model_cnn.h5') 
+            test_loss, test_accuracy = model.evaluate(test_images, test_labels)
+
+            return render_template('cnn.html', test_loss=test_loss, test_accuracy=test_accuracy)
+        else:
+            test = int(request.form['test_ke'])
+
+            if test < 0 and test > 10000:
+                test = 1
+            mnist = fashion_mnist
+            (training_images, training_labels), (test_images, test_labels) = mnist.load_data()
+
+            test_images_r = test_images.reshape(10000, 28, 28, 1)
+            test_images_r = test_images_r / 255.0
+
+            model = load_model('static/assets/model/model_cnn.h5')
+            model.summary()
+            
+            result = model.predict(test_images_r)
+            print(result[0])
+            kelasInd = 0;
+            for i in range(len(result[test])):
+                if result[test][i] > result[test][kelasInd]:
+                    kelasInd = i
+            kelas = class_fashion_label[kelasInd]
+            
+            plt.imshow(test_images[test],cmap='gray')
+            plt.savefig('static/assets/images/hasil_cnn.png')
+            print(kelas)
+            return render_template('cnn.html', kelas=kelas)
+    else:
+        return render_template('cnn.html')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
