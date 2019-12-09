@@ -12,7 +12,7 @@ ADD . /flask-app
 
 WORKDIR /flask-app
 
-RUN pip3 install -r requirements.txt
+RUN pip3 install -r requirements.txt --no-cache
 
 ENTRYPOINT ["python3"]
 
