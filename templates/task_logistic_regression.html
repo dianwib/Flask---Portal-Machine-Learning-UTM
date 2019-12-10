@@ -50,7 +50,7 @@
                 </div>
                 <nav id="nav-menu-container">
                     <ul class="nav-menu">
-                        <li><a href="/">Home</a></li>
+                       <li><a href="/">Home</a></li>
                         <li><a href="notes">Materi</a></li>
                         <li class="menu-has-children menu-active"><a href="">Tugas</a>
                             <ul>
@@ -60,6 +60,9 @@
                                 <li><a href="kmeans">K-means Clustering - Segmentasi Citra</a></li>
                                 <li><a href="task_artificial_neural_network">Artificial Neural Networks</a></li>
                                 <li><a href="cnn">Convolutional Neural Networks</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="contact">Kontak</a></li>
                     </ul>
                 </nav>
                 <!-- #nav-menu-container -->
@@ -99,20 +102,161 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="section-title text-center">
-                        <h1>Dataset</h1>
-                        <!-- <h4> Brief Description</h4> -->
-                        <p> Dataset yang digunakan adalah Breast Cancer Wisconsin (Diagnostic) Dataset. Dataset tersebut berasal dari penelitian Bapak Dr. William H. Wolberg, Bapak Nick Street dan Bapak Olvi L. Mangasarian yang berjudul “Nuclear feature extraction
-                            for breast tumor diagnosis” pada tahun 1993 dan “Breast cancer diagnosis and prognosis via linear programming” pada tahun 1995. Dataset tersebut dapat diunduh menggunakan library sklearn.datasets dan berada pada kelas load_diabetes().
-                            Jumlah fitur yang dimiliki Breast Cancer Wisconsin (Diagnostic) Dataset adalah 30 fitur yang terdiri dari radius (mean), texture(mean), perimeter (mean), area(mean), smoothness(mean), compactness(mean), concavity(mean), concave
-                            points(mean), symmetry (mean), fractal dimension (mean), radius (standard error), texture (standard error), perimeter (standard error), area (standard error), smoothness (standard error), compactness (standard error), concavity
-                            (standard error), concave points (standard points), symmetry (standard error), fractal dimension (standard error), radius (worst), texture (worst), perimeter (worst), area (worst), smoothness (worst), compactness (worst), compactness
-                            (worst), concavity (worst), concave points (worst), symmetry (worst) dan fractal dimenstion (worst). Target dari Breast Cancer Wisconsin (Diagnostic) Dataset adalah 1 dan 0 yang artinya 1 untuk WDBC-Walignant / Kelas Wisconsin
-                            Kanker Paru-paru Ganas dan 0 untuk WDBC-Benign / Kelas Wisconsin Kanker Paru-paru Jinak. Tujuan dari Breast Cancer Wisconsin (Diagnostic) Dataset adalah melihat apakah kanker paru-paru seseorang tergolong kanker ganas atau
-                            kanker jinak dengan menggunakan citra paru-paru dengan fitur yang terdiri dari radius (mean), texture(mean), perimeter (mean), area(mean), smoothness(mean), compactness(mean), concavity(mean), concave points(mean), symmetry
-                            (mean), fractal dimension (mean), radius (standard error), texture (standard error), perimeter (standard error), area (standard error), smoothness (standard error), compactness (standard error), concavity (standard error),
-                            concave points (standard points), symmetry (standard error), fractal dimension (standard error), radius (worst), texture (worst), perimeter (worst), area (worst), smoothness (worst), compactness (worst), compactness (worst),
-                            concavity (worst), concave points (worst), symmetry (worst) dan fractal dimension (worst).
-                        </p>
+                        <style type="text/css">
+                            .list-ic li {
+  position: relative;
+}
+.list-ic li span {
+  display: inline-block;
+  font-weight: 800;
+  width: 1.5em;
+  height: 1.5em;
+  text-align: center;
+  line-height:1.5em;
+  border-radius: 1em;
+  background: #18bc9c;
+  color: white;
+  position: relative;
+}
+.list-ic.vertical {
+  padding: 0;
+  margin: 0;
+}
+.list-ic.vertical li {
+  list-style-type: none;
+  text-align: left;
+}
+.list-ic.vertical li span {
+  margin: 1.5em 0;
+  }
+
+  .list-ic.horizontal li {
+  display: inline-block;
+}
+.list-ic.horizontal li span {
+  margin: 0 1em;
+}
+.list-ic.horizontal li::before {
+  top: 0.9em;
+  left: -25px;
+  width: 4em;
+  height: 0.2em;
+}
+
+
+                        </style>
+                        <h1>Dataset <br>"Breast Cancer Wisconsin (Diagnostic)"</h1>
+
+<ul class="list-ic vertical">
+    <li>
+        <span>*</span>
+        Sumber : <a href="https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Diagnostic)">https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Diagnostic)   </a>
+    </li>
+    <li>
+        <span>*</span>
+        Sklearn.datasets : load_breast_cancer()
+    </li>
+    <li>
+        <span>*</span>
+        Diagnosa breast cancer terdiri dari dua kelas, yaitu :
+    <ul class="list-ic horizontal" style="margin-left: 10%;">
+    
+        <li>
+        <span>1</span>
+        Malignant / kanker ganas
+    </li>
+    <li>
+        <span>2</span>
+        Benign / kanker jinak
+    </li>
+    </ul>
+
+    </li>
+    <li>
+        <span>*</span>
+        Jumlah Fitur : 30, antara lain  :
+        <ul class="list-ic horizontal" style="margin-left: 10%;">
+            <style type="text/css">
+                table {
+  border-collapse: collapse;
+}
+
+td {
+  border: 1px solid #18bc9c;
+  width: 10%;
+  height: 10%;
+  padding: 8px;
+}
+
+
+td:hover {
+  background: #18bc9c;
+  color: white;
+}
+            </style>
+            <table style="text-align: center;" >
+    <tr>
+    <td>Mean radius</td>
+    <td>Mean texture</td>
+    <td>Mean perimeter</td>
+    <td>Mean area</td>
+    <td>Mean smoothness</td>
+  </tr>
+    <tr>
+    <td>Mean compactnes</td>
+    <td>Mean concavity</td>
+    <td>Mean concave 
+points</td>
+    <td>Mean 
+symmetry</td>
+    <td>Mean fractal 
+dimension</td>
+  </tr>
+  <tr>
+    <td>Radius error</td>
+    <td>Texture erro</td>
+    <td>Perimeter error</td>
+    <td>Area error </td>
+    <td>Smoothness error</td>
+  </tr>
+  <tr>
+    <td>Compactness error</td>
+    <td>Concavity error</td>
+    <td>Concave points 
+error</td>
+    <td>Symmetry 
+error</td>
+    <td>Fractal dimension 
+error</td>
+  </tr>
+  <tr>
+    <td>Worst radius</td>
+    <td>Worst texture</td>
+    <td>Worst perimeter</td>
+    <td>Worst area </td>
+    <td>Worst smoothness</td>
+  </tr>
+  <tr>
+    <td>Worst compactness</td>
+    <td>Worst concavity</td>
+    <td>Worst concave 
+points'</td>
+    <td>Worst 
+symmetry </td>
+    <td>
+Worst fractal 
+dimension</td>
+  </tr>
+</table>
+    </li>
+</ul>
+    <li>
+        <span>*</span>
+        Jumlah data : 569
+    </li>
+    
+    
+</ul>
                     </div>
                 </div>
             </div>

@@ -402,17 +402,17 @@ def kmeans():
     else:
         return render_template('kmeans.html')
 # ----------------------------------------------------------
-from flask import Flask, render_template, request
-import cv2
+
 from PIL import Image
+#from keras.datasets import fashion_mnist
 from keras.layers import Conv2D, MaxPooling2D, Activation, Dense, Flatten
 from keras.models import Sequential, load_model
 import matplotlib.pyplot as plt
 import numpy as np
 import random
 from sklearn.model_selection import train_test_split
-import tensorflow as tf
-
+#from keras import backend as K
+#K.clear_session()
 
 @app.route('/cnn', methods=['GET', 'POST'])
 def show_cnn():
@@ -423,8 +423,13 @@ def show_cnn():
             test_size = (100 - int(request.form['komposisi'])) / 100
             epochs = int(request.form['query_epoch'])
             
-            mnist = tf.keras.datasets.fashion_mnist
-            (training_images, training_labels), (test_images, test_labels) = keras.datasets.fashion_mnist.load_data()
+            #mnist = fashion_mnist
+            #(training_images, training_labels), (test_images, test_labels) = mnist.load_data()
+            training_images = np.load("static/assets/datasets/cnn_training_images.npy")
+            training_labels = np.load("static/assets/datasets/cnn_training_labels.npy")
+            test_images = np.load("static/assets/datasets/cnn_test_images.npy")
+            test_labels = np.load("static/assets/datasets/cnn_test_labels.npy")
+            
             training_images = training_images.reshape(60000, 28, 28, 1)
             training_images = training_images / 255.0
             test_images = test_images.reshape(10000, 28, 28, 1)
@@ -435,8 +440,9 @@ def show_cnn():
             #    num_of_layers = 5
 
             model = Sequential()
+            
             model.add(Conv2D(64, kernel_size=3, activation='relu', input_shape=(28,28,1)))
-            model.add(Conv2D(32, kernel_size=3, activation='relu'))
+            model.add(Conv2D(32, kernel_size=   3, activation='relu'))
             model.add(Flatten())
             model.add(Dense(128, activation='relu'))
             model.add(Dense(10, activation='softmax'))
@@ -454,8 +460,13 @@ def show_cnn():
 
             if test < 0 and test > 10000:
                 test = 1
-            mnist = fashion_mnist
-            (training_images, training_labels), (test_images, test_labels) = mnist.load_data()
+
+            #mnist = fashion_mnist
+            #(training_images, training_labels), (test_images, test_labels) = mnist.load_data()
+            training_images = np.load("static/assets/datasets/cnn_training_images.npy")
+            training_labels = np.load("static/assets/datasets/cnn_training_labels.npy")
+            test_images = np.load("static/assets/datasets/cnn_test_images.npy")
+            test_labels = np.load("static/assets/datasets/cnn_test_labels.npy")
 
             test_images_r = test_images.reshape(10000, 28, 28, 1)
             test_images_r = test_images_r / 255.0
@@ -470,12 +481,29 @@ def show_cnn():
                 if result[test][i] > result[test][kelasInd]:
                     kelasInd = i
             kelas = class_fashion_label[kelasInd]
-            
-            plt.imshow(test_images[test],cmap='gray')
+
+            plt.imshow(np.squeeze(test_images[test]),cmap='gray')
             plt.savefig('static/assets/images/hasil_cnn.png')
             print(kelas)
             return render_template('cnn.html', kelas=kelas)
     else:
+        #mnist = fashion_mnist
+        #(training_images, training_labels), (test_images, test_labels) = mnist.load_data()
+        '''training_images = np.load("cnn_training_images.npy")
+        training_labels = np.load("cnn_training_labels.npy")
+        test_images = np.load("cnn_test_images.npy")
+        test_labels = np.load("cnn_test_labels.npy")
+        
+        training_images = training_images.reshape(60000, 28, 28, 1)
+        #training_images = training_images / 255.0
+        test_images = test_images.reshape(10000, 28, 28, 1)
+        #test_images = test_images / 255.0
+
+        np.save("cnn_training_images.npy", training_images)
+        np.save("cnn_training_labels.npy", training_labels)
+        np.save("cnn_test_images.npy", test_images)
+        np.save("cnn_test_labels.npy", test_labels)'''
+        
         return render_template('cnn.html')
 
 if __name__ == "__main__":

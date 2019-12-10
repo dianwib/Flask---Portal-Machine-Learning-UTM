@@ -107,35 +107,119 @@
 					
 					{% if mode == 'training' %}
 					<div class="section-title">
-						<h1 class="text-center">Dataset <br>(The Iris Dataset)</h1>
-						This data sets consists of 3 different types of irises’ (Setosa, Versicolour, and Virginica) petal and sepal length, stored in a 150x4 numpy.ndarray
-						<br><br>
-						The rows being the samples and the columns being: Sepal Length, Sepal Width, Petal Length and Petal Width.
-						<br><br>
-						The iris dataset is a classic and very easy multi-class classification dataset.
-						<br><br>
-						<table class="table">
-							<tr>
-								<td>Classes</td>
-								<td>3</td>
-							</tr>
-							<tr>
-								<td>Samples per class</td>
-								<td>50</td>
-							</tr>
-							<tr>
-								<td>Samples total</td>
-								<td>150</td>
-							</tr>
-							<tr>
-								<td>Dimensionality</td>
-								<td>4</td>
-							</tr>
-							<tr>
-								<td>Features</td>
-								<td>real, positive</td>
-							</tr>
-						</table>
+						<style type="text/css">
+                            .list-ic li {
+  position: relative;
+}
+.list-ic li span {
+  display: inline-block;
+  font-weight: 800;
+  width: 1.5em;
+  height: 1.5em;
+  text-align: center;
+  line-height:1.5em;
+  border-radius: 1em;
+  background: #18bc9c;
+  color: white;
+  position: relative;
+}
+.list-ic.vertical {
+  padding: 0;
+  margin: 0;
+}
+.list-ic.vertical li {
+  list-style-type: none;
+  text-align: left;
+}
+.list-ic.vertical li span {
+  margin: 1.5em 0;
+  }
+
+  .list-ic.horizontal li {
+  display: inline-block;
+}
+.list-ic.horizontal li span {
+  margin: 0 1em;
+}
+.list-ic.horizontal li::before {
+  top: 0.9em;
+  left: -25px;
+  width: 4em;
+  height: 0.2em;
+}
+
+
+                        </style>
+                        <h1 class="text-center">Dataset <br>"IRIS"</h1>
+
+<ul class="list-ic vertical">
+    
+    <li>
+        <span>*</span>
+        Sklearn.datasets : load_iris()
+    </li>
+    <li>
+        <span>*</span>
+        Dataset IRIS merupakan data klasifikasi bunga Iris, yang terdiri dari tiga kelas bunga Iris, 
+yaitu :
+    <ul class="list-ic horizontal" style="margin-left: 10%;">
+    
+        <li>
+        <span>1</span>
+        Setosa
+    </li>
+    <li>
+        <span>2</span>
+        Versicolour
+    </li>
+    <li>
+        <span>3</span>
+        Virginica
+    </li>
+    
+    </ul>
+
+    </li>
+    <li>
+        <span>*</span>
+        Terdapat empat buah fitur untuk bunga Iris ini, antara lain :
+
+        <ul class="list-ic horizontal" style="margin-left: 10%;">
+            <style type="text/css">
+                table {
+  border-collapse: collapse;
+}
+
+td {
+  border: 1px solid #18bc9c;
+  width: 10%;
+  height: 10%;
+  padding: 8px;
+}
+
+
+td:hover {
+  background: #18bc9c;
+  color: white;
+}
+            </style>
+            <table style="text-align: center;" >
+    <tr>
+    <td>Sepal Length</td>
+    <td>Sepal Width</td>
+    <td>Petal Length</td>
+    <td>Petal Width</td>
+  </tr>
+</table>
+    </li>
+</ul>
+    <li>
+        <span>*</span>
+        Jumlah data : 150, tiap kelas 50 data
+    </li>
+    
+    
+</ul>
 					</div>
 					{% endif %}
 				</div></div></div></section>

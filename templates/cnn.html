@@ -46,7 +46,7 @@
 		<div class="container">
 			<div class="row align-items-center justify-content-between d-flex">
 				<div id="logo">
-					<a href="index.html"><img src="{{url_for('static', filename='assets/img/logo.png')}}" alt="" title="" /></a>
+					<a href="/"><img src="{{url_for('static', filename='assets/img/logo.png')}}" alt="" title="" /></a>
 				</div>
 				<nav id="nav-menu-container">
 					<ul class="nav-menu">
@@ -60,6 +60,9 @@
                                 <li><a href="kmeans">K-means Clustering - Segmentasi Citra</a></li>
                                 <li><a href="task_artificial_neural_network">Artificial Neural Networks</a></li>
                                 <li><a href="cnn">Convolutional Neural Networks</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="contact">Kontak</a></li>
 					</ul>
 				</nav><!-- #nav-menu-container -->
 			</div>
@@ -79,9 +82,9 @@
 						the space telescope.</p> -->
 						<br><br><br>
 						<div class="courses pt-20">
-						<a href="cart/dataset" data-wow-duration="1s" data-wow-delay=".6s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">Dataset</a>
-						<a href="cart/training" data-wow-duration="1s" data-wow-delay=".9s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">Training</a>
-						<a href="cart/testing" data-wow-duration="1s" data-wow-delay=".3s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">Testing</a>
+						<a href="#dataset" data-wow-duration="1s" data-wow-delay=".6s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">Dataset</a>
+						<a href="#training" data-wow-duration="1s" data-wow-delay=".9s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">Training</a>
+						<a href="#testing" data-wow-duration="1s" data-wow-delay=".3s" class="primary-btn transparent mr-10 mb-10 wow fadeInDown">Testing</a>
 						
 					
 					
@@ -97,12 +100,12 @@
 
 
 	<!-- Start Faculty Area -->
-	<section class="faculty-area section-gap" id="testing">
-		<div class="container">
+	<section class="faculty-area section-gap"  id="training" >
+		<div class="container" >
 			<div class="">
 				<form method="post" enctype="multipart/form-data">
 				<h2 class="text-center">Training</h2>
-				<div class="row mt-md-5 form-group">
+				<div class="row mt-md-5 form-group" >
 					<label for="komposisi" id='komposisiLabel'>Komposisi</label>
 					<input type="range" class="custom-range" min="5" max="95" step="1" value='80' id="komposisi" name='komposisi'>
 				</div>
@@ -147,7 +150,7 @@
 			</div>
 			<br>
 			
-			<div class="justify-content-center">
+			<div class="justify-content-center" id="testing">
 
 				<h2 class="text-center">Testing</h2>
 				<form method="post" enctype="multipart/form-data">
