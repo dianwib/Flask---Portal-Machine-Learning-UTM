@@ -403,13 +403,16 @@ def kmeans():
         return render_template('kmeans.html')
 # ----------------------------------------------------------
 
-from keras.datasets import fashion_mnist
+from PIL import Image
+#from keras.datasets import fashion_mnist
 from keras.layers import Conv2D, MaxPooling2D, Activation, Dense, Flatten
 from keras.models import Sequential, load_model
 import matplotlib.pyplot as plt
 import numpy as np
 import random
 from sklearn.model_selection import train_test_split
+from keras import backend as K
+K.clear_session()
 
 @app.route('/cnn', methods=['GET', 'POST'])
 def show_cnn():
@@ -419,11 +422,14 @@ def show_cnn():
         if mode == "Training":
             test_size = (100 - int(request.form['komposisi'])) / 100
             epochs = int(request.form['query_epoch'])
-            #num_of_layers = int(request.form['query_layers'])
-            tipeModel = request.form['tipeModel']
             
-            mnist = fashion_mnist
-            (training_images, training_labels), (test_images, test_labels) = mnist.load_data()
+            #mnist = fashion_mnist
+            #(training_images, training_labels), (test_images, test_labels) = mnist.load_data()
+            training_images = np.load("static/assets/datasets/cnn_training_images.npy")
+            training_labels = np.load("static/assets/datasets/cnn_training_labels.npy")
+            test_images = np.load("static/assets/datasets/cnn_test_images.npy")
+            test_labels = np.load("static/assets/datasets/cnn_test_labels.npy")
+            
             training_images = training_images.reshape(60000, 28, 28, 1)
             training_images = training_images / 255.0
             test_images = test_images.reshape(10000, 28, 28, 1)
@@ -433,41 +439,19 @@ def show_cnn():
             #if num_of_layers < 0 and num_of_layers > 10:
             #    num_of_layers = 5
 
-            if tipeModel == "1":
-                model = Sequential()
-                model.add(Conv2D(64, kernel_size=3, activation='relu', input_shape=(28,28,1)))
-                model.add(Conv2D(32, kernel_size=3, activation='relu'))
-        
-                model.add(Flatten())
-                model.add(Dense(128, activation='relu'))
-                model.add(Dense(10, activation='softmax'))
-                model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
-                print("training model 1")
-                model.fit(data_training, target_training, epochs=epochs)
-                model.summary()
-            elif tipeModel == "2":
-                model = Sequential()
-                model.add(Conv2D(64, kernel_size=3, activation='relu', input_shape=(28,28,1)))
-                model.add(Flatten())
-                model.add(Dense(128, activation='relu'))
-                model.add(Dense(64, activation='relu'))
-                model.add(Dense(10, activation='softmax'))
-                model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
-                print("training model 2")
-                model.fit(data_training, target_training, epochs=epochs)
-                model.summary()
-            else:
-                model = Sequential()
-                model.add(Conv2D(64, kernel_size=3, activation='relu', input_shape=(28,28,1)))
-                model.add(Flatten())
-                model.add(Dense(128, activation='relu'))
-                model.add(Dense(10, activation='softmax'))
-                model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
-                print("training model 3")
-                model.fit(data_training, target_training, epochs=epochs)
-                model.summary()
+            model = Sequential()
             
-            model.save('static/assets/model/model.h5') 
+            model.add(Conv2D(64, kernel_size=3, activation='relu', input_shape=(28,28,1)))
+            model.add(Conv2D(32, kernel_size=   3, activation='relu'))
+            model.add(Flatten())
+            model.add(Dense(128, activation='relu'))
+            model.add(Dense(10, activation='softmax'))
+            model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+            print("training model...")
+            model.fit(data_training, target_training, epochs=epochs)
+            model.summary()
+            
+            model.save('static/assets/model/model_cnn.h5') 
             test_loss, test_accuracy = model.evaluate(test_images, test_labels)
 
             return render_template('cnn.html', test_loss=test_loss, test_accuracy=test_accuracy)
@@ -476,27 +460,50 @@ def show_cnn():
 
             if test < 0 and test > 10000:
                 test = 1
-            mnist = fashion_mnist
-            (training_images, training_labels), (test_images, test_labels) = mnist.load_data()
+
+            #mnist = fashion_mnist
+            #(training_images, training_labels), (test_images, test_labels) = mnist.load_data()
+            training_images = np.load("static/assets/datasets/cnn_training_images.npy")
+            training_labels = np.load("static/assets/datasets/cnn_training_labels.npy")
+            test_images = np.load("static/assets/datasets/cnn_test_images.npy")
+            test_labels = np.load("static/assets/datasets/cnn_test_labels.npy")
 
             test_images_r = test_images.reshape(10000, 28, 28, 1)
             test_images_r = test_images_r / 255.0
 
-            model = load_model('static/assets/model/model.h5')
+            model = load_model('static/assets/model/model_cnn.h5')
+            model.summary()
             
             result = model.predict(test_images_r)
             print(result[0])
-            kelasInd = 0
+            kelasInd = 0;
             for i in range(len(result[test])):
                 if result[test][i] > result[test][kelasInd]:
                     kelasInd = i
             kelas = class_fashion_label[kelasInd]
-            
-            plt.imshow(test_images[test],cmap='gray')
-            plt.savefig('static/assets/images/hasil.png')
+
+            plt.imshow(np.squeeze(test_images[test]),cmap='gray')
+            plt.savefig('static/assets/images/hasil_cnn.png')
             print(kelas)
             return render_template('cnn.html', kelas=kelas)
     else:
+        #mnist = fashion_mnist
+        #(training_images, training_labels), (test_images, test_labels) = mnist.load_data()
+        '''training_images = np.load("cnn_training_images.npy")
+        training_labels = np.load("cnn_training_labels.npy")
+        test_images = np.load("cnn_test_images.npy")
+        test_labels = np.load("cnn_test_labels.npy")
+        
+        training_images = training_images.reshape(60000, 28, 28, 1)
+        #training_images = training_images / 255.0
+        test_images = test_images.reshape(10000, 28, 28, 1)
+        #test_images = test_images / 255.0
+
+        np.save("cnn_training_images.npy", training_images)
+        np.save("cnn_training_labels.npy", training_labels)
+        np.save("cnn_test_images.npy", test_images)
+        np.save("cnn_test_labels.npy", test_labels)'''
+        
         return render_template('cnn.html')
 
 if __name__ == "__main__":

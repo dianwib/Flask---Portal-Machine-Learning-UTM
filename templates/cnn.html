@@ -119,200 +119,71 @@
 					}
 					komposisi.oninput = function() {
 						var testing = 100 - this.value
-						komposisiLabel.innerHTML = 'Komposisi : ' + this.value + '% training, ' + testing +    <form method="post" enctype="multipart/form-data">
-            <h2 class="text-center">Training</h2>
-            <div class="row mt-md-5 form-group">
-                <label for="komposisi" id='komposisiLabel'>Komposisi</label>
-                <input type="range" class="custom-range" min="5" max="95" step="1" value='80' id="komposisi" name='komposisi'>
-            </div>
-            <script>
-                var komposisi = document.getElementById('komposisi');
-                var komposisiLabel = document.getElementById('komposisiLabel')
-                komposisiLabel.innerHTML = 'Komposisi : ' + komposisi.value + '% training, ' + (100 - komposisi.value) + '% testing'
-                komposisi.onchange = function() {
-                    var testing = 100 - this.value
-                    komposisiLabel.innerHTML = 'Komposisi : ' + this.value + '% training, ' + testing + '% testing';
-                }
-                komposisi.oninput = function() {
-                    var testing = 100 - this.value
-                    komposisiLabel.innerHTML = 'Komposisi : ' + this.value + '% training, ' + testing + '% testing';
-                }
-            </script>
-            <div class='row mt-md-5 form-group'>
-                <div class="col">
-                    <label for="id_epoch">Jumlah Epoch</label>
-                    <input type="text" class="form-control" placeholder="Epoch" name="query_epoch" id="id_epoch">
-                </div>
-                <div class="col">
-                    <label>Tipe Model</label><br>
-                    <!--<input type="text" class="form-control" placeholder="Jumlah Layers" name="query_layers" id="id_layers">-->
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="tipeModel" value="1">
-                        <label class="form-check-label" for="inlineRadio1">Model 1</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="tipeModel" value="2">
-                        <label class="form-check-label" for="inlineRadio1">Model 2</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="tipeModel" value="3">
-                        <label class="form-check-label" for="inlineRadio1">Model 3</label>
-                    </div>
-                </div>
-                <div class="col-md-1">
-                    <input type="hidden" name="mode" value="Training">
-                    <button class="btn btn-primary" type="submit" style="margin-top: 30px;">Train</button>
-                </div>
-            </div>
-        </form>
-        <br>
-        <!-- <h2 class="text-center">Testing</h2> -->
-        <!-- {% if summary %}
-        <div class="row">
-            <div class="col">
-                <h3 class='text-center'>Model Summary</h3>
-            </div>
-            <div class="col text-center">
-                {{ summary }}
-            </div>
-        </div>
-        {% endif %} -->
-        <div class="row">
-            <div class="col">
-                Test Loss : {% if test_loss %} {{ test_loss }} {% else %} - {% endif %}
-            </div>
-            <div class="col">
-                Test Accuracy : {% if test_accuracy %} {{ test_accuracy }} {% else %} - {% endif %}
-            </div>
-            <!-- <div class="col">
-                <form action="" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="mode" value="Testing">
-                    <button type="submit" class="btn btn-primary" style="padding: 5px auto;">Test</button>
-                </form>
-            </div> -->
-        </div>
-        <br>
-        <h2 class="text-center" id="testing" >Testing</h2>
-        <form method="post" enctype="multipart/form-data">
-            <input type="hidden" name="mode" value="Test">
-            <div class='row mt-md-5 form-group'>
-                <div class="col-md-5"></div>
-                <div class="col-md-2 text-center">
-                    <label class='text-center' for="test_ke">Data Test Ke - </label>
-                    <input type="text" class="form-control" placeholder="Max. 10000" name="test_ke" id="test_ke">
-                    <input type="hidden" name="mode" value="Testing">
-                    <br>
-                    <button type="submit" class="btn btn-primary">Test</button>
-                </div>
-            </div>
-            <div class="col-md-5"></div>
-            <!-- <h3 class="text-center">Choose one image or input file image to predict class</h3>
-            <div class="row">
-                <div class="col">
-                    <img class="mx-auto d-block citra" src="./static/assets/images/fashion_image_test/0.jpg">
-                    <br>
-                    <div class="radio">
-                        <input class="mx-auto d-block" type="radio" name="optradioimg" value="0" checked="checked">
-                    </div>
-                </div>
-                <div class="col">
-                    <img class="mx-auto d-block citra" src="./static/assets/images/fashion_image_test/1.jpg">
-                    <br>
-                    <div class="radio">
-                        <input class="mx-auto d-block" type="radio" name="optradioimg" value="1">
-                    </div>
-                </div>
-                <div class="col">
-                    <img class="mx-auto d-block citra" src="./static/assets/images/fashion_image_test/2.jpg">
-                    <br>
-                    <div class="radio">
-                        <input class="mx-auto d-block" type="radio" name="optradioimg" value="2">
-                    </div>
-                </div>
-                <div class="col">
-                    <img class="mx-auto d-block citra" src="./static/assets/images/fashion_image_test/3.jpg">
-                    <br>
-                    <div class="radio">
-                        <input class="mx-auto d-block" type="radio" name="optradioimg" value="3">
-                    </div>
-                </div>
-                <div class="col">
-                    <img class="mx-auto d-block citra" src="./static/assets/images/fashion_image_test/4.jpg">
-                    <br>
-                    <div class="radio">
-                        <input class="mx-auto d-block" type="radio" name="optradioimg" value="4">
-                    </div>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col">
-                    <img class="mx-auto d-block citra" src="./static/assets/images/fashion_image_test/5.jpg">
-                    <br>
-                    <div class="radio">
-                        <input class="mx-auto d-block" type="radio" name="optradioimg" value="5">
-                    </div>
-                </div>
-                <div class="col">
-                    <img class="mx-auto d-block citra" src="./static/assets/images/fashion_image_test/6.jpg">
-                    <br>
-                    <div class="radio">
-                        <input class="mx-auto d-block" type="radio" name="optradioimg" value="6">
-                    </div>
-                </div>
-                <div class="col">
-                    <img class="mx-auto d-block citra" src="./static/assets/images/fashion_image_test/7.jpg">
-                    <br>
-                    <div class="radio">
-                        <input class="mx-auto d-block" type="radio" name="optradioimg" value="7">
-                    </div>
-                </div>
-                <div class="col">
-                    <img class="mx-auto d-block citra" src="./static/assets/images/fashion_image_test/8.jpg">
-                    <br>
-                    <div class="radio">
-                        <input class="mx-auto d-block" type="radio" name="optradioimg" value="8">
-                    </div>
-                </div>
-                <div class="col">
-                    <img class="mx-auto d-block citra" src="./static/assets/images/fashion_image_test/9.jpg">
-                    <br>
-                    <div class="radio">
-                        <input class="mx-auto d-block" type="radio" name="optradioimg" value="9">
-                    </div>
-                </div>
-            </div> 
-            <br>
-            <div class="row">
-                <div class="col-sm-5">
-                    <div class="custom-file">
-                        <input id='inputFile' type="file" class="custom-file-input" name="query_img_upload">
-                        <label id='labelInputFile' class="custom-file-label" for="inputFile">Choose Image Test (opsional)</label>
-                    </div>
-                </div>
-                <div class="col-sm-1"></div>
-                <div class="col-sm-2">
-                    <input type="hidden" name="mode" value="Predict">
-                    <button type="submit" class="btn btn-primary">Predict</button>
-                </div>
-            </div>
-            -->
-    </div>
-    </form>
-    <br> {% if kelas %}
-    <div class='row'>
-        <div class='col'>
-            <img class='mx-auto d-block citra-hasil' id="predict_image" src="{{url_for('static', filename='assets/images/hasil/hasil.png')}}" alt="citra test">
-            <script>
-                document.getElementById("predict_image").src += "?dummy=" + Date.now();
-            </script>
-        </div>
-        <div class='col'>
-            <h3 class='text'>Kelas : {{ kelas }}</h3>
-        </div>
-    </div>
-    <br><br> {% endif %}
-    </div>
+						komposisiLabel.innerHTML = 'Komposisi : ' + this.value + '% training, ' + testing + '% testing';
+					}
+				</script>
+				<div class='row mt-md-5 form-group'>
+					<div class="col">
+						<label for="id_epoch">Jumlah Epoch</label>
+						<input type="text" class="form-control" placeholder="Epoch" name="query_epoch" id="id_epoch">
+					</div>
+					<div class="col">
+						<label>Bentuk Model</label><br>
+						<!--<input type="text" class="form-control" placeholder="Jumlah Layers" name="query_layers" id="id_layers">-->
+						Conv2D(64, 3x3, relu) - Conv2D(32, 3x3, relu) - Dense(128, relu) - Dense(10, softmax) - output 
+					</div>
+					<div class="col-md-1">
+						<input type="hidden" name="mode" value="Training">
+						<button class="btn btn-primary" type="submit" style="margin-top: 30px;">Train</button>
+					</div>
+				</div>
+				</form>
+			</div>
+			
+			<div class="row">
+				<div class="col">
+					Test Loss : {% if test_loss %} {{ test_loss }} {% else %} - {% endif %}
+				</div>
+				<div class="col">
+					Test Accuracy : {% if test_accuracy %} {{ test_accuracy }} {% else %} - {% endif %}
+				</div>
+			</div>
+			<br>
+			
+			<div class="justify-content-center" id="testing">
+
+				<h2 class="text-center">Testing</h2>
+				<form method="post" enctype="multipart/form-data">
+				<div class='row form-group'>
+					<div class="col-md-4"></div>
+					<div class="col-md-4 text-center">
+						<label class='text-center' for="test_ke">Data Test Ke - </label>
+						<input type="text" class="form-control" placeholder="Max. 10000" name="test_ke" id="test_ke">
+						<input type="hidden" name="mode" value="Testing">
+						<br>
+						<button type="submit" class="btn btn-primary">Test</button>
+					</div>
+					<div class="col-md-4"></div>
+				</div>
+				</form>
+				
+			</div>
+			
+			<br> {% if kelas %}
+			<div class='row'>
+				<div class='col'>
+					<img class='mx-auto d-block citra-hasil' id="predict_image" alt="citra test" src="{{url_for('static', filename='assets/images/hasil_cnn.png')}}">
+					<script>
+						document.getElementById("predict_image").src += "?dummy="+Date.now();
+					</script>
+				</div>
+				<div class='col'>
+					<h3 class='text'>Kelas : {{ kelas }}</h3>
+				</div>
+			</div>
+			<br><br> {% endif %}
+			</div>
+	
 		</div>
 	</section>
 	<!-- End Faculty Area -->
