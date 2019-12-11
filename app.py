@@ -456,7 +456,7 @@ def show_cnn():
             test_loss, test_accuracy = model.evaluate(test_images, test_labels)
 
             return render_template('cnn.html', test_loss=test_loss, test_accuracy=test_accuracy)
-         else:
+        else:
             test = int(request.form['test_ke'])
 
             if test < 0 and test > 10000:
