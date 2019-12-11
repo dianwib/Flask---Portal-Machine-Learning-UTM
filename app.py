@@ -413,7 +413,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import random
 from sklearn.model_selection import train_test_split
-
+import tensorflow as tf
 
 @app.route('/cnn', methods=['GET', 'POST'])
 def show_cnn():
@@ -454,7 +454,8 @@ def show_cnn():
             
             model.save('static/assets/model/model_cnn.h5') 
             test_loss, test_accuracy = model.evaluate(test_images, test_labels)
-
+            tf.reset_default_graph()
+            
             return render_template('cnn.html', test_loss=test_loss, test_accuracy=test_accuracy)
         else:
             test = int(request.form['test_ke'])
