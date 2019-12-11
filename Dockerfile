@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-MAINTAINER Dian wibowo
+MAINTAINER Wijanarko Putra Rajeb "wijanarko.rajeb@gmail.com"
 
 RUN apt-get update -y
 
@@ -12,7 +12,7 @@ ADD . /flask-app
 
 WORKDIR /flask-app
 
-RUN pip3 install -r requirements.txt --no-cache
+RUN pip3 install -r requirements.txt
 
 ENTRYPOINT ["python3"]
 
