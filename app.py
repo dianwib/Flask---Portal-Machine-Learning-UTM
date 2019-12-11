@@ -8,8 +8,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from keras.utils import to_categorical
-from keras import backend as K
-K.clear_session()
 
 
 
@@ -456,16 +454,16 @@ def show_cnn():
             test_loss, test_accuracy = model.evaluate(test_images, test_labels)
 
             return render_template('cnn.html', test_loss=test_loss, test_accuracy=test_accuracy)
+        
+
         else:
             test = int(request.form['test_ke'])
 
             if test < 0 and test > 10000:
                 test = 1
-            mnist = fashion_mnist
             
             test_images = np.load("static/assets/datasets/cnn_test_images.npy")
             test_labels = np.load("static/assets/datasets/cnn_test_labels.npy")
-
             test_images_r = test_images.reshape(10000, 28, 28, 1)
             test_images_r = test_images_r / 255.0
 
@@ -483,6 +481,8 @@ def show_cnn():
             plt.savefig('static/assets/images/hasil.png')
             print(kelas)
             return render_template('cnn.html', kelas=kelas)
+    else:
+        return render_template('cnn.html')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
