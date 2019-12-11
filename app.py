@@ -411,8 +411,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import random
 from sklearn.model_selection import train_test_split
-#from keras import backend as K
-#K.clear_session()
+from keras import backend as K
+K.clear_session()
 
 @app.route('/cnn', methods=['GET', 'POST'])
 def show_cnn():
@@ -448,7 +448,7 @@ def show_cnn():
             model.add(Dense(10, activation='softmax'))
             model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
             print("training model...")
-            model.fit(training_images, training_labels, epochs=epochs)
+            model.fit(data_training, target_training, epochs=epochs)
             model.summary()
             
             model.save('static/assets/model/model_cnn.h5') 
