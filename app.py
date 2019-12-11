@@ -8,6 +8,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from keras.utils import to_categorical
+from keras import backend as K
+K.clear_session()
 
 
 
@@ -411,8 +413,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import random
 from sklearn.model_selection import train_test_split
-from keras import backend as K
-K.clear_session()
+
 
 @app.route('/cnn', methods=['GET', 'POST'])
 def show_cnn():
