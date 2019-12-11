@@ -412,8 +412,6 @@ import numpy as np
 import random
 from sklearn.model_selection import train_test_split
 
-app = Flask(__name__)
-
 @app.route('/cnn', methods=['GET', 'POST'])
 def show_cnn():
     class_fashion_label = ['T-shirt', 'Trouser', 'Pullover', 'Dress', 'Coat', 'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
